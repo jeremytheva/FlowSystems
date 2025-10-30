@@ -1,0 +1,12 @@
+{
+  "solo": [
+    { "key": "TimeToValue", "raw": 8.5, "direction": "normal", "weight": 0.4 },
+    { "key": "SetupEffort", "raw": 3.5, "direction": "inverted", "weight": 0.35 },
+    { "key": "Integrations", "raw": 6.0, "direction": "normal", "weight": 0.25 }
+  ],
+  "team": [
+    { "key": "TimeToValue", "raw": 7.0, "direction": "normal", "weight": 0.3 },
+    { "key": "SetupEffort", "raw": 4.5, "direction": "inverted", "weight": 0.3 },
+    { "key": "Integrations", "raw": 7.5, "direction": "normal", "weight": 0.4 }
+  ]
+}
