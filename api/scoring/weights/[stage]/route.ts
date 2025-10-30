@@ -1,0 +1,1 @@
+import { NextResponse } from 'next/server'; export async function GET(_:Request,{params}:{params:{stage:string}}){return NextResponse.json({ok:true,stage:params.stage,weights:[]})} export async function PATCH(req:Request,{params}:{params:{stage:string}}){const body=await req.json().catch(()=>({}));return NextResponse.json({ok:true,stage:params.stage,updated:body})}

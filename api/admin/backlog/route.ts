@@ -1,0 +1,1 @@
+import { NextResponse } from 'next/server'; export async function GET(){return NextResponse.json({ok:true,items:[]})} export async function POST(){return NextResponse.json({ok:true,created:true})} export async function PATCH(){return NextResponse.json({ok:true,updated:true})}
