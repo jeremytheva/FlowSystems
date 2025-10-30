@@ -2,11 +2,10 @@ import { NextResponse } from 'next/server';
 
 import { getReviewBySlug } from '@/lib/mdx';
 
-interface ReviewParams {
-  params: { slug: string };
-}
-
-export async function GET(_request: Request, { params }: ReviewParams) {
+export async function GET(
+  _request: Request,
+  { params }: { params: { slug: string } }
+) {
   const review = await getReviewBySlug(params.slug);
 
   if (!review) {
