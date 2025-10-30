@@ -3,34 +3,61 @@ title: "<A> vs <B>: Which is better for solos?"
 slug: "<a>-vs-<b>"
 aPlatformId: "uuid-a"
 bPlatformId: "uuid-b"
+aName: "<A>"
+bName: "<B>"
 status: "draft"
-tags: ["category:<cat>","stage:solo"]
+tags: ["category:<cat>", "stage:solo"]
+factorDeltas: []
+comparisonData: []
+migrationSteps: []
+migrationRisks: []
 ---
 
-# <A> vs <B>: Which is better for solos?
+import { ChooseIf } from "../../components/mdx/ChooseIf";
+import { CompareTable } from "../../components/mdx/CompareTable";
+import { MigrationGuide } from "../../components/mdx/MigrationGuide";
 
-<ChooseIf a={A} b={B} deltas={factorDeltas} />
+# {frontmatter.title}
+
+<ChooseIf
+a={frontmatter.aName}
+b={frontmatter.bName}
+deltas={frontmatter.factorDeltas}
+/>
 
 ## Pricing
+
 Table of pricing and plan differences.
 
 ## Setup Effort & Onboarding
+
 Compare initial setup and migration paths.
 
 ## Time-to-Value (first-week wins)
+
 Which delivers results fastest?
 
 ## Integrations & Ecosystem
+
 What plays nicely together?
 
 ## Support & Docs
+
 Quality and channels.
 
 ## Factor Breakdown
-<CompareTable data={comparisonData} />
+
+<CompareTable data={frontmatter.comparisonData} />
 
 ## Migration Guide
-<MigrationGuide from={A} to={B} steps={migrationSteps} risks={migrationRisks} />
+
+<MigrationGuide
+  from={frontmatter.aName}
+  to={frontmatter.bName}
+  steps={frontmatter.migrationSteps}
+  risks={frontmatter.migrationRisks}
+/>
 
 ## Verdict
+
 Short, practical recommendation.
