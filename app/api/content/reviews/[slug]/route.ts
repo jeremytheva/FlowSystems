@@ -1,11 +1,10 @@
+import type { RouteContext } from 'next';
 import { NextResponse } from 'next/server';
 
 import { getReviewBySlug } from '@/lib/mdx';
 
-export async function GET(
-  _request: Request,
-  { params }: { params: { slug: string } }
-) {
+export async function GET(_request: Request, context: RouteContext<{ slug: string }>) {
+  const { params } = context;
   const review = await getReviewBySlug(params.slug);
 
   if (!review) {
