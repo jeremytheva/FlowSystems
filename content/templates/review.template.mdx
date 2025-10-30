@@ -13,44 +13,60 @@ factors:
     direction: "inverted"
     weight: 0.1
 status: "draft"
-tags: ["category:<cat>","stage:solo"]
+tags: ["category:<cat>", "stage:solo"]
+evidenceByFactor: []
 ---
 
-# <Platform> Review: Who it's best for
+import { FactorTable } from "../../components/mdx/FactorTable";
+import { EvidenceDrawer } from "../../components/mdx/EvidenceDrawer";
+import { SetupEstimator } from "../../components/mdx/SetupEstimator";
+import { SnapshotPoll } from "../../components/mdx/SnapshotPoll";
+
+# {frontmatter.title}
 
 > TL;DR Verdict: <one-sentence verdict here>
 
 ## What jobs <Platform> solves
+
 Explain the job-to-be-done for solos/micro-SMBs.
 
 ## Setup & Onboarding (Setup Effort)
+
 Cover signup, imports, initial configuration, and pitfalls.
 
 ## What you get in week 1 (Time-to-Value)
+
 Concrete outcomes and quick wins.
 
 ## Pricing & Plans
+
 Summarize plans and gotchas.
 
 ## Integrations & Ecosystem
+
 Key integrations and usage patterns.
 
 ## Support & Docs
+
 Docs quality, support channels, and community.
 
 ## Factor Breakdown
-<FactorTable factors={frontMatter.factors} />
+
+<FactorTable factors={frontmatter.factors} />
 
 ## Pros & Cons
+
 - **Pros:** ...
 - **Cons:** ...
 
 ## Alternatives
+
 Link 2–3 close alternatives with a short rationale.
 
 ## Verdict — Should you pick <Platform>?
+
 Clear decision with “choose if / skip if” bullets.
 
-<EvidenceDrawer items={evidenceByFactor} />
+<EvidenceDrawer items={frontmatter.evidenceByFactor} />
 <SetupEstimator defaults={{ imports: 1, automations: 1, users: 1 }} />
-<SnapshotPoll question="Was this helpful?" options={["Yes","No"]} />
+<SnapshotPoll question="Was this helpful?" options={["Yes", "No"]} />
