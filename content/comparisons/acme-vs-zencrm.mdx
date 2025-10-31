@@ -1,0 +1,72 @@
+---
+title: "Acme CRM vs ZenCRM: Which is better for solos?"
+slug: "acme-vs-zencrm"
+aPlatformId: "acme-crm"
+bPlatformId: "zen-crm"
+status: "published"
+tags: ["category:crm","stage:solo"]
+A:
+  name: "Acme CRM"
+  chooseIf:
+    - "You want the fastest setup"
+    - "Automation templates matter"
+  skipIf:
+    - "You need team analytics"
+B:
+  name: "ZenCRM"
+  chooseIf:
+    - "You need multi-pipeline reporting"
+    - "Advanced automation branching"
+  skipIf:
+    - "You only have a handful of clients"
+factorDeltas:
+  - factor: "Time-to-Value"
+    delta: 1.5
+  - factor: "Setup Effort"
+    delta: -0.8
+comparisonData:
+  - factor: "Time-to-Value"
+    a: 8.5
+    b: 7.0
+  - factor: "Setup Effort"
+    a: 6.5
+    b: 7.3
+  - factor: "Integrations"
+    a: 6.0
+    b: 7.2
+migrationSteps:
+  - "Export pipelines from ZenCRM as CSV"
+  - "Map ZenCRM custom fields to Acme CRM templates"
+  - "Recreate automations using Acme recipes"
+migrationRisks:
+  - "ZenCRM multi-pipeline reporting has no direct equivalent."
+  - "Advanced branching requires rebuilding in Acme's automation builder."
+---
+
+# Acme CRM vs ZenCRM: Which is better for solos?
+
+<ChooseIf a={frontMatter.A} b={frontMatter.B} deltas={frontMatter.factorDeltas} />
+
+## Pricing
+Acme CRM starts at $29/mo while ZenCRM begins at $39/mo with add-ons for automation.
+
+## Setup Effort & Onboarding
+Acme CRM’s wizard handles imports and templates in under an hour. ZenCRM takes longer but surfaces more granular controls.
+
+## Time-to-Value (first-week wins)
+Acme CRM’s automation library accelerates quick wins. ZenCRM requires more configuration before automations run reliably.
+
+## Integrations & Ecosystem
+ZenCRM supports more enterprise connectors, but Acme CRM’s Zapier and webhook coverage fits most solo workflows.
+
+## Support & Docs
+Both offer live chat and documentation. Acme CRM adds async office hours focused on automation recipes.
+
+## Factor Breakdown
+<CompareTable data={frontMatter.comparisonData} />
+
+## Migration Guide
+<MigrationGuide from={frontMatter.B.name} to={frontMatter.A.name} steps={frontMatter.migrationSteps} risks={frontMatter.migrationRisks} />
+
+## Verdict
+Pick Acme CRM when you need speed and automation. Choose ZenCRM if analytics depth outweighs setup time.

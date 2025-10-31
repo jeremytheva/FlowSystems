@@ -1,0 +1,4 @@
+id,name,category,website,tags
+acme-crm,Acme CRM,crm,https://acme.example,"solo|automation"
+zen-crm,ZenCRM,crm,https://zen.example,"team|integrations"
+flow-suite,Flow Suite,automation,https://flow.example,"ops|api"

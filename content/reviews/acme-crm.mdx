@@ -1,0 +1,68 @@
+---
+title: "Acme CRM Review: Who it's best for"
+slug: "acme-crm-review"
+platformId: "acme-crm"
+score: 82
+factors:
+  - key: "TimeToValue"
+    raw: 8.5
+    direction: "normal"
+    weight: 0.4
+  - key: "SetupEffort"
+    raw: 3.5
+    direction: "inverted"
+    weight: 0.35
+  - key: "Integrations"
+    raw: 6.0
+    direction: "normal"
+    weight: 0.25
+status: "published"
+tags: ["category:crm","stage:solo"]
+stage: "solo"
+evidenceByFactor:
+  - label: "Customer onboarding benchmark"
+    url: "https://example.com/acme/onboarding"
+    summary: "Sampled 15 new accounts completing import in < 2 hours."
+  - label: "Automation library overview"
+    url: "https://example.com/acme/library"
+    summary: "60+ prebuilt recipes for intake and follow-ups."
+---
+
+# Acme CRM Review: Who it's best for
+
+> TL;DR Verdict: Acme CRM is the fastest solo-friendly CRM when you need automation without spending a weekend configuring it.
+
+## What jobs Acme CRM solves
+Acme CRM focuses on solos running high-touch client pipelines. The kanban pipeline, quick tasks, and AI follow-up prompts make it easy to keep deals moving without context switching.
+
+## Setup & Onboarding (Setup Effort)
+Guided import steps pull from spreadsheets, Stripe, or Notion in minutes. The wizard flags missing fields and suggests automations you can enable later.
+
+## What you get in week 1 (Time-to-Value)
+Expect a ready-to-send follow-up engine. The automation builder ships with sequences for lead capture and contract reminders that you can clone in a click.
+
+## Pricing & Plans
+Starts at $29/mo for solos with unlimited pipelines. Teams unlock collaboration tools at $59/mo.
+
+## Integrations & Ecosystem
+Native connections cover Google Workspace, Calendly, and Zapier. Webhooks plus the REST API allow deeper workflows.
+
+## Support & Docs
+Weekly office hours and an async forum staffed by product specialists.
+
+## Factor Breakdown
+<FactorTable factors={frontMatter.factors} />
+
+## Pros & Cons
+- **Pros:** Remarkably fast to launch, helpful AI prompts, clear upgrade path.
+- **Cons:** Reporting is basic, automation caps on the solo tier.
+
+## Alternatives
+Consider ZenCRM if you need deeper analytics, or Flow Suite when automation coverage matters most.
+
+## Verdict — Should you pick Acme CRM?
+Choose Acme CRM if you want a fast solo CRM that can graduate to light team workflows. Skip it if you need advanced forecasting.
+
+<EvidenceDrawer items={frontMatter.evidenceByFactor} />
+<SetupEstimator defaults={{ imports: 1, automations: 2, users: 2 }} />
+<SnapshotPoll question="Was this helpful?" options={["Yes","No"]} />

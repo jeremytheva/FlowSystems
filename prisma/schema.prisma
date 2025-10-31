@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Platform {
+  id          String   @id
+  name        String
+  category    String
+  website     String
+  tags        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  reviews     Review[]
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  platformId  String
+  score       Int
+  status      String
+  contentPath String
+  platform    Platform @relation(fields: [platformId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
