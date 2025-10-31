@@ -65,7 +65,7 @@ export default function Page() {
       <Section
         eyebrow="Categories"
         title="How we structure the FlowSystems library"
-        description="Each category houses frameworks, telemetry, and enablement packages designed to solve for a core operating challenge."
+        description={`Each category houses frameworks, telemetry, and enablement packages designed to solve for a core operating challenge.`}
       >
         <div className="grid gap-6 lg:grid-cols-3">
           {categories.map((category) => (
@@ -88,7 +88,7 @@ export default function Page() {
       <Section
         eyebrow="Programs"
         title="Featured flows operators are deploying now"
-        description="These programs blend automation, enablement, and decision intelligence. Each can be adapted for your environment in weeks, not months."
+        description={`These programs blend automation, enablement, and decision intelligence. Each can be adapted for your environment in weeks, not months.`}
       >
         <div className="grid gap-6 lg:grid-cols-3">
           {featuredPrograms.map((program) => (
@@ -119,7 +119,7 @@ export default function Page() {
       <Section
         eyebrow="Value Stack"
         title="Operating layers that keep flows resilient"
-        description="We make value creation visible across foundation, activation, and evolution layers so leaders know where to invest next."
+        description={`We make value creation visible across foundation, activation, and evolution layers so leaders know where to invest next.`}
       >
         <div className="grid gap-6 lg:grid-cols-3">
           {valueStack.map((layer) => (
@@ -166,7 +166,7 @@ export default function Page() {
       <Section
         eyebrow="Community"
         title="Where practitioners co-create the next generation of flows"
-        description="Our community programs keep the system grounded in real operator experience. Join to share playbooks, validate ideas, and see what others are shipping."
+        description={`Our community programs keep the system grounded in real operator experience. Join to share playbooks, validate ideas, and see what others are shipping.`}
       >
         <div className="grid gap-6 lg:grid-cols-[2fr_3fr]">
           <article className="space-y-3 rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
