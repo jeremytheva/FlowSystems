@@ -60,7 +60,7 @@ export default function Page() {
       <Section
         eyebrow="Lifecycle"
         title="Delivery cadence that compounds learning"
-        description="Every engagement cycles through discover, design, deploy, and evolve. Each phase has exit criteria and rituals to keep us honest."
+        description={`Every engagement cycles through discover, design, deploy, and evolve. Each phase has exit criteria and rituals to keep us honest.`}
       >
         <ol className="grid gap-6 md:grid-cols-2">
           {deliveryPhases.map((phase, index) => (

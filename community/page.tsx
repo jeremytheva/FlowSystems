@@ -70,7 +70,7 @@ export default function Page() {
       <Section
         eyebrow="Collaboration"
         title="Where community work meets the product roadmap"
-        description="Research leads and community hosts stay in lock-step. Insights from every interaction inform what ships next."
+        description={`Research leads and community hosts stay in lock-step. Insights from every interaction inform what ships next.`}
       >
         <div className="grid gap-6 md:grid-cols-3">
           {researchStreams.map((stream) => (
