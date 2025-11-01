@@ -1,6 +1,7 @@
 import type { AdminTask } from "../../lib/types";
+import { AdminTaskSchema, validateData } from "../../lib/validateData";
 
-export const importQueue: AdminTask[] = [
+const rawImportQueue: AdminTask[] = [
   {
     id: "import-reviews",
     title: "Review backlog sync",
@@ -17,7 +18,7 @@ export const importQueue: AdminTask[] = [
   },
 ];
 
-export const publishingTasks: AdminTask[] = [
+const rawPublishingTasks: AdminTask[] = [
   {
     id: "publish-navigator",
     title: "Publish Navigator review",
@@ -33,7 +34,7 @@ export const publishingTasks: AdminTask[] = [
   },
 ];
 
-export const scoringTasks: AdminTask[] = [
+const rawScoringTasks: AdminTask[] = [
   {
     id: "refresh-metrics",
     title: "Refresh scoring weights",
@@ -49,7 +50,7 @@ export const scoringTasks: AdminTask[] = [
   },
 ];
 
-export const backlogItems: AdminTask[] = [
+const rawBacklogItems: AdminTask[] = [
   {
     id: "platform-requests",
     title: "New platform evaluation requests",
@@ -65,3 +66,27 @@ export const backlogItems: AdminTask[] = [
     notes: "Synthesizing 18 submissions",
   },
 ];
+
+export const importQueue = validateData<AdminTask>(
+  "importQueue",
+  AdminTaskSchema,
+  rawImportQueue
+);
+
+export const publishingTasks = validateData<AdminTask>(
+  "publishingTasks",
+  AdminTaskSchema,
+  rawPublishingTasks
+);
+
+export const scoringTasks = validateData<AdminTask>(
+  "scoringTasks",
+  AdminTaskSchema,
+  rawScoringTasks
+);
+
+export const backlogItems = validateData<AdminTask>(
+  "backlogItems",
+  AdminTaskSchema,
+  rawBacklogItems
+);

@@ -1,6 +1,7 @@
 import type { StackPlay } from "../lib/types";
+import { StackPlaySchema, validateData } from "../lib/validateData";
 
-export const stacks: StackPlay[] = [
+const rawStacks: StackPlay[] = [
   {
     slug: "growth-foundation",
     name: "Growth Foundation Stack",
@@ -46,3 +47,9 @@ export const stacks: StackPlay[] = [
     ],
   },
 ];
+
+export const stacks = validateData<StackPlay>(
+  "stacks",
+  StackPlaySchema,
+  rawStacks
+);

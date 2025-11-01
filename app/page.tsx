@@ -81,7 +81,7 @@ export default function Page() {
         contentClassName="grid gap-6 lg:grid-cols-3"
       >
         {valueStack.map((layer) => (
-          <ValueLayerCard key={layer.name} layer={layer} />
+          <ValueLayerCard key={layer.title} layer={layer} />
         ))}
       </Section>
 

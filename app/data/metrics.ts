@@ -1,6 +1,7 @@
 import type { SystemMetric } from "../lib/types";
+import { SystemMetricSchema, validateData } from "../lib/validateData";
 
-export const systemMetrics: SystemMetric[] = [
+const rawSystemMetrics: SystemMetric[] = [
   {
     label: "Operational Flows",
     value: "128",
@@ -25,3 +26,9 @@ export const systemMetrics: SystemMetric[] = [
     caption: "From discovery to measurable impact on core KPIs.",
   },
 ];
+
+export const systemMetrics = validateData<SystemMetric>(
+  "systemMetrics",
+  SystemMetricSchema,
+  rawSystemMetrics
+);

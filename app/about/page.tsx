@@ -42,16 +42,18 @@ export default function Page() {
         <div className="grid gap-6 md:grid-cols-3">
           {valueStack.map((layer) => (
             <article
-              key={layer.name}
+              key={layer.title}
               className="space-y-3 rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
             >
-              <h3 className="text-lg font-semibold text-slate-900">{layer.name}</h3>
-              <p className="text-sm text-slate-600">{layer.mission}</p>
-              <ul className="list-disc space-y-1 pl-5 text-xs text-slate-500">
-                {layer.signals.map((signal) => (
-                  <li key={signal}>{signal}</li>
-                ))}
-              </ul>
+              <h3 className="text-lg font-semibold text-slate-900">{layer.title}</h3>
+              <p className="text-sm text-slate-600">{layer.description}</p>
+              {layer.examples && layer.examples.length > 0 && (
+                <ul className="list-disc space-y-1 pl-5 text-xs text-slate-500">
+                  {layer.examples.map((example) => (
+                    <li key={example}>{example}</li>
+                  ))}
+                </ul>
+              )}
             </article>
           ))}
         </div>

@@ -1,6 +1,7 @@
 import type { FlowCategory } from "../../lib/types";
+import { FlowCategorySchema, validateData } from "../../lib/validateData";
 
-export const categories: FlowCategory[] = [
+const rawCategories: FlowCategory[] = [
   {
     slug: "intelligence-ops",
     name: "Intelligence Ops",
@@ -30,3 +31,9 @@ export const categories: FlowCategory[] = [
     heroStatement: "Design journeys that make every touchpoint feel orchestrated.",
   },
 ];
+
+export const categories = validateData<FlowCategory>(
+  "categories",
+  FlowCategorySchema,
+  rawCategories
+);

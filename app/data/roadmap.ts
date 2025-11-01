@@ -1,6 +1,7 @@
 import type { ReleaseItem } from "../lib/types";
+import { ReleaseItemSchema, validateData } from "../lib/validateData";
 
-export const upcomingReleases: ReleaseItem[] = [
+const rawUpcomingReleases: ReleaseItem[] = [
   {
     title: "Navigator 2.0",
     eta: "July 2024",
@@ -20,3 +21,9 @@ export const upcomingReleases: ReleaseItem[] = [
     focus: "Solution design templates and enablement loops for channel teams.",
   },
 ];
+
+export const upcomingReleases = validateData<ReleaseItem>(
+  "upcomingReleases",
+  ReleaseItemSchema,
+  rawUpcomingReleases
+);

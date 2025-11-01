@@ -57,9 +57,9 @@ export type FlowProgram = {
 };
 
 export type ValueLayer = {
-  name: string;
-  mission: string;
-  signals: string[];
+  title: string;
+  description: string;
+  examples?: string[];
 };
 
 export type ReleaseItem = {
