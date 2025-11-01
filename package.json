@@ -1,0 +1,10 @@
+{
+  "name": "flowsystems",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
