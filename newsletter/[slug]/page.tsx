@@ -5,7 +5,7 @@ interface NewsletterPageProps {
 }
 
 export default function Page({ params }: NewsletterPageProps) {
-  const issueId = decodeURIComponent(params.slug);
+  const issueId = params.slug;
   return (
     <div>
       <h2>Newsletter Issue</h2>

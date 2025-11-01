@@ -5,7 +5,7 @@ interface PlatformPageProps {
 }
 
 export default function Page({ params }: PlatformPageProps) {
-  const platformSlug = decodeURIComponent(params.slug);
+  const platformSlug = params.slug;
   return (
     <div>
       <h2>Platform Detail</h2>

@@ -5,7 +5,7 @@ interface StackPageProps {
 }
 
 export default function Page({ params }: StackPageProps) {
-  const stackSlug = decodeURIComponent(params.slug);
+  const stackSlug = params.slug;
   return (
     <div>
       <h2>Stack of the Week</h2>
