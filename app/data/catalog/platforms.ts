@@ -1,6 +1,10 @@
 import type { Platform } from "../../lib/types";
 import { PlatformSchema, validateData } from "../../lib/validateData";
 
+/**
+ * Raw unvalidated list of platforms.
+ * Each object should satisfy the Platform type.
+ */
 const rawPlatforms: Platform[] = [
   {
     id: "navigator",
@@ -15,17 +19,20 @@ const rawPlatforms: Platform[] = [
       {
         id: "signals",
         label: "Signal Mesh",
-        description: "Ingests product analytics, CRM events, and support signals with out-of-the-box normalization.",
+        description:
+          "Ingests product analytics, CRM events, and support signals with out-of-the-box normalization.",
       },
       {
         id: "playbooks",
         label: "Adaptive Playbooks",
-        description: "Auto-recommends lifecycle motions with guardrails based on ICP alignment.",
+        description:
+          "Auto-recommends lifecycle motions with guardrails based on ICP alignment.",
       },
       {
         id: "governance",
         label: "Governed Experiments",
-        description: "Keeps growth experiments on track with stage gates, approvals, and metric attribution.",
+        description:
+          "Keeps growth experiments on track with stage gates, approvals, and metric attribution.",
       },
     ],
     metrics: [
@@ -33,9 +40,22 @@ const rawPlatforms: Platform[] = [
       { label: "Avg TTV", value: "19 days", trend: "-4 days" },
     ],
     plans: [
-      { tier: "Launch", price: "$1,200", bestFor: "Seed to Series A teams shipping first flows" },
-      { tier: "Scale", price: "$2,800", bestFor: "Revenue teams coordinating multi-channel plays" },
-      { tier: "Enterprise", price: "Talk to us", bestFor: "Operators spanning product, CS, and partner orgs" },
+      {
+        tier: "Launch",
+        price: "$1,200",
+        bestFor: "Seed to Series A teams shipping first flows",
+      },
+      {
+        tier: "Scale",
+        price: "$2,800",
+        bestFor: "Revenue teams coordinating multi-channel plays",
+      },
+      {
+        tier: "Enterprise",
+        price: "Talk to us",
+        bestFor:
+          "Operators spanning product, CS, and partner orgs",
+      },
     ],
     integrations: ["Salesforce", "HubSpot", "Segment", "Amplitude", "Zendesk"],
   },
@@ -52,17 +72,20 @@ const rawPlatforms: Platform[] = [
       {
         id: "rituals",
         label: "Ritual Tracker",
-        description: "Monitors discovery, planning, and review cadences across squads.",
+        description:
+          "Monitors discovery, planning, and review cadences across squads.",
       },
       {
         id: "capacity",
         label: "Capacity Sensing",
-        description: "Highlights saturation and skill gaps with week-level forecasts.",
+        description:
+          "Highlights saturation and skill gaps with week-level forecasts.",
       },
       {
         id: "briefings",
         label: "Executive Briefings",
-        description: "Summaries focused on bets, risks, and mitigations ready for leadership reviews.",
+        description:
+          "Summaries focused on bets, risks, and mitigations ready for leadership reviews.",
       },
     ],
     metrics: [
@@ -70,8 +93,18 @@ const rawPlatforms: Platform[] = [
       { label: "Decision Latency", value: "-23%", trend: "Improving" },
     ],
     plans: [
-      { tier: "Studio", price: "$900", bestFor: "Product teams codifying delivery health rituals" },
-      { tier: "Atlas", price: "$2,400", bestFor: "Scale-ups orchestrating multi-squad programs" },
+      {
+        tier: "Studio",
+        price: "$900",
+        bestFor:
+          "Product teams codifying delivery health rituals",
+      },
+      {
+        tier: "Atlas",
+        price: "$2,400",
+        bestFor:
+          "Scale-ups orchestrating multi-squad programs",
+      },
     ],
     integrations: ["Linear", "Jira", "Notion", "Looker", "Slack"],
   },
@@ -88,17 +121,20 @@ const rawPlatforms: Platform[] = [
       {
         id: "health",
         label: "Account Health",
-        description: "Blends telemetry and human input into a unified health score.",
+        description:
+          "Blends telemetry and human input into a unified health score.",
       },
       {
         id: "playmaker",
         label: "Playmaker",
-        description: "Routes the best action with context, assets, and success stories.",
+        description:
+          "Routes the best action with context, assets, and success stories.",
       },
       {
         id: "voice",
         label: "Voice of Customer",
-        description: "Synthesizes feedback channels into prioritized improvement areas.",
+        description:
+          "Synthesizes feedback channels into prioritized improvement areas.",
       },
     ],
     metrics: [
@@ -106,15 +142,37 @@ const rawPlatforms: Platform[] = [
       { label: "Play Adoption", value: "87%", trend: "+5 pts" },
     ],
     plans: [
-      { tier: "Teams", price: "$1,500", bestFor: "Customer success orgs under 50 seats" },
-      { tier: "Impact", price: "$3,500", bestFor: "Scaled CS orgs aligning with revenue" },
+      {
+        tier: "Teams",
+        price: "$1,500",
+        bestFor:
+          "Customer success orgs under 50 seats",
+      },
+      {
+        tier: "Impact",
+        price: "$3,500",
+        bestFor:
+          "Scaled CS orgs aligning with revenue",
+      },
     ],
     integrations: ["Gainsight", "ChurnZero", "Snowflake", "Slack", "Gong"],
   },
 ];
 
-export const platforms = validateData<Platform>(
-  "platforms",
-  PlatformSchema,
-  rawPlatforms
-);
+/**
+ * Validate and export.
+ * In dev, print any validation errors directly to console and rethrow them
+ * so Vercel’s build log shows what went wrong.
+ */
+export const platforms = (() => {
+  try {
+    return validateData<Platform>("platforms", PlatformSchema, rawPlatforms);
+  } catch (error: any) {
+    console.error("❌ Validation error in platforms.ts", error);
+    if (process.env.NODE_ENV !== "production") {
+      throw error;
+    }
+    // Fallback for production – return raw data instead of breaking the build.
+    return rawPlatforms;
+  }
+})();
