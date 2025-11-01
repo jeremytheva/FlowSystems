@@ -58,11 +58,16 @@ export async function generateStaticParams() {
     return [];
   }
 
-  const response = await fetch(`${baseUrl}/api/catalog/platforms`);
-  if (!response.ok) {
+  try {
+    const response = await fetch(`${baseUrl}/api/catalog/platforms`);
+    if (!response.ok) {
+      return [];
+    }
+
+    const platforms = (await response.json()) as Platform[];
+    return platforms.map((platform) => ({ slug: platform.id }));
+  } catch (error) {
+    console.error('Failed to prefetch platform slugs', error);
     return [];
   }
-
-  const platforms = (await response.json()) as Platform[];
-  return platforms.map((platform) => ({ slug: platform.id }));
 }
