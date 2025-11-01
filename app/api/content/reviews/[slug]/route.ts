@@ -10,7 +10,7 @@ export async function GET(
   try {
     const review = await buildReviewFromTemplate(params.slug);
     return new Response(
-      JSON.stringify({ ok: true, slug: params.slug, review }),
+      JSON.stringify({ ok: true, slug: review.slug, review }),
       {
         headers: { 'content-type': 'application/json' },
       }
@@ -20,7 +20,7 @@ export async function GET(
       return new Response(
         JSON.stringify({ ok: false, error: error.message }),
         {
-          status: 404,
+          status: 400,
           headers: { 'content-type': 'application/json' },
         }
       );

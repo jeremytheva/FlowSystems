@@ -92,22 +92,42 @@ function applyReplacements(source: string, replacements: Record<string, string>)
   }, source);
 }
 
-function normaliseSlug(slug: string) {
-  if (!slug || !slug.endsWith('-review')) {
+function normaliseSlug(slug: string): { baseSlug: string; normalisedSlug: string } {
+  const trimmed = slug?.trim();
+
+  if (!trimmed) {
+    console.warn('Received empty review slug');
     throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
   }
 
-  const baseSlug = slug.replace(/-review$/, '');
+  const withoutTrailingSlash = trimmed.replace(/\/+$/, '');
+
+  if (!withoutTrailingSlash) {
+    console.warn('Received review slug with only slashes');
+    throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
+  }
+
+  const lowerCaseSlug = withoutTrailingSlash.toLowerCase();
+
+  const normalisedSlug = lowerCaseSlug.endsWith('-review')
+    ? lowerCaseSlug
+    : `${lowerCaseSlug}-review`;
+
+  const baseSlug = normalisedSlug.replace(/-review$/, '');
 
   if (!baseSlug) {
+    console.warn('Failed to derive base slug from review slug', slug);
     throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
   }
 
-  return baseSlug;
+  return {
+    baseSlug,
+    normalisedSlug,
+  };
 }
 
 export async function buildReviewFromTemplate(slug: string): Promise<ReviewContent> {
-  const baseSlug = normaliseSlug(slug);
+  const { baseSlug, normalisedSlug } = normaliseSlug(slug);
   const platformName = toTitleCase(baseSlug);
   const defaultCategory = baseSlug.includes('-')
     ? baseSlug.split('-')[0]
@@ -122,7 +142,7 @@ export async function buildReviewFromTemplate(slug: string): Promise<ReviewConte
 
   return {
     title: applyReplacements(REVIEW_TITLE_TEMPLATE, replacements),
-    slug,
+    slug: normalisedSlug,
     platformId: applyReplacements(REVIEW_PLATFORM_ID_TEMPLATE, replacements),
     score: 0,
     status: REVIEW_STATUS_TEMPLATE,
