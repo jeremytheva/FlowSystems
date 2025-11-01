@@ -1,73 +1,101 @@
-import { headers } from 'next/headers';
-import { notFound } from 'next/navigation';
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Section } from "../../components/Section";
+import { platforms } from "../../data/catalog/platforms";
 
-export const dynamic = 'force-dynamic';
-
-interface Platform {
-  id: string;
-  name: string;
-  category: string;
-  pricing: Record<string, number>;
-  tags: string[];
+export function generateStaticParams() {
+  return platforms.map((platform) => ({ slug: platform.id }));
 }
 
-async function fetchPlatforms(): Promise<Platform[]> {
-  const headersList = headers();
-  const protocol = headersList.get('x-forwarded-proto') ?? 'http';
-  const host = headersList.get('host');
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL || (host ? `${protocol}://${host}` : '');
+export default function PlatformPage({ params }: { params: { slug: string } }) {
+  const platform = platforms.find((item) => item.id === params.slug);
 
-  const response = await fetch(`${baseUrl}/api/catalog/platforms`, {
-    next: { revalidate: 0 },
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch platforms');
+  if (!platform) {
+    notFound();
   }
-
-  return (await response.json()) as Platform[];
-}
-
-export default async function PlatformPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const platforms = await fetchPlatforms();
-  const platform = platforms.find((item) => item.id === params.slug) ?? notFound();
 
   return (
-    <main className="p-8">
-      <h1 className="text-3xl font-bold">{platform.name}</h1>
-      <p className="text-gray-600">{platform.category}</p>
-      <ul className="mt-4">
-        {Object.entries(platform.pricing).map(([tier, price]) => (
-          <li key={tier}>
-            {tier}: ${price}/mo
-          </li>
+    <main className="mx-auto max-w-5xl space-y-10 px-6 py-12">
+      <header className="space-y-3">
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">Platform</p>
+        <h1 className="text-4xl font-bold text-slate-900">{platform.name}</h1>
+        <p className="text-base text-slate-600">{platform.tagline}</p>
+        <div className="flex flex-wrap gap-2 text-xs uppercase tracking-wide text-slate-500">
+          {platform.tags.map((tag) => (
+            <span key={tag} className="rounded-full bg-slate-100 px-3 py-1">
+              {tag}
+            </span>
+          ))}
+        </div>
+        <Link className="text-sm font-semibold text-indigo-600 underline" href={platform.website}>
+          Visit website
+        </Link>
+      </header>
+
+      <Section
+        eyebrow="Overview"
+        title="What this platform enables"
+        description="Snapshot of the core jobs to be done and why operators choose it for this stack."
+      >
+        <p className="text-sm text-slate-600">{platform.overview}</p>
+      </Section>
+
+      <Section
+        eyebrow="Capabilities"
+        title="How the platform delivers outcomes"
+        contentClassName="grid gap-4 sm:grid-cols-2"
+      >
+        {platform.capabilities.map((capability) => (
+          <article key={capability.id} className="space-y-2 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 className="text-base font-semibold text-slate-900">{capability.label}</h2>
+            <p className="text-sm text-slate-600">{capability.description}</p>
+          </article>
         ))}
-      </ul>
+      </Section>
+
+      <Section
+        eyebrow="Live Signals"
+        title="Adoption metrics we monitor"
+        contentClassName="grid gap-4 sm:grid-cols-2"
+      >
+        {platform.metrics.map((metric) => (
+          <div key={metric.label} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="text-xs uppercase tracking-wide text-slate-500">{metric.label}</p>
+            <p className="mt-2 text-2xl font-semibold text-slate-900">{metric.value}</p>
+            {metric.trend ? (
+              <p className="mt-2 text-xs font-semibold uppercase text-emerald-600">{metric.trend}</p>
+            ) : null}
+          </div>
+        ))}
+      </Section>
+
+      <Section
+        eyebrow="Plans"
+        title="Pricing & deployment modes"
+        description="Choose the plan that matches your operating complexity."
+        contentClassName="grid gap-4 sm:grid-cols-3"
+      >
+        {platform.plans.map((plan) => (
+          <article key={plan.tier} className="space-y-2 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="text-xs uppercase tracking-wide text-slate-500">{plan.tier}</p>
+            <p className="text-2xl font-semibold text-slate-900">{plan.price}</p>
+            <p className="text-sm text-slate-600">{plan.bestFor}</p>
+          </article>
+        ))}
+      </Section>
+
+      <Section
+        eyebrow="Ecosystem"
+        title="Integrations operators rely on"
+      >
+        <ul className="flex flex-wrap gap-2 text-sm text-slate-600">
+          {platform.integrations.map((integration) => (
+            <li key={integration} className="rounded-full bg-slate-100 px-3 py-1">
+              {integration}
+            </li>
+          ))}
+        </ul>
+      </Section>
     </main>
   );
-}
-
-export async function generateStaticParams() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-  if (!baseUrl) {
-    return [];
-  }
-
-  try {
-    const response = await fetch(`${baseUrl}/api/catalog/platforms`);
-    if (!response.ok) {
-      return [];
-    }
-
-    const platforms = (await response.json()) as Platform[];
-    return platforms.map((platform) => ({ slug: platform.id }));
-  } catch (error) {
-    console.error('Failed to prefetch platform slugs', error);
-    return [];
-  }
 }
