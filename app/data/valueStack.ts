@@ -1,19 +1,29 @@
 import type { ValueLayer } from "../lib/types";
+import { ValueStackSchema, validateData } from "../lib/validateData";
 
-export const valueStack: ValueLayer[] = [
+const rawValueStack: ValueLayer[] = [
   {
-    name: "Foundation",
-    mission: "Codify system primitives—data contracts, rituals, and KPIs—that every flow builds on.",
-    signals: ["Baseline observability", "Governed experimentation", "Integrated knowledge base"],
+    title: "Foundation",
+    description:
+      "Codify system primitives—data contracts, rituals, and KPIs—that every flow builds on.",
+    examples: ["Baseline observability", "Governed experimentation", "Integrated knowledge base"],
   },
   {
-    name: "Activation",
-    mission: "Compose flows that compound impact across marketing, product, and operations teams.",
-    signals: ["Orchestrated journeys", "Closed-loop enablement", "Dynamic playbooks"],
+    title: "Activation",
+    description:
+      "Compose flows that compound impact across marketing, product, and operations teams.",
+    examples: ["Orchestrated journeys", "Closed-loop enablement", "Dynamic playbooks"],
   },
   {
-    name: "Evolution",
-    mission: "Adapt the operating model with scenario planning, capability scoring, and community input.",
-    signals: ["Modelled futures", "Capability benchmarks", "Shared learning cadences"],
+    title: "Evolution",
+    description:
+      "Adapt the operating model with scenario planning, capability scoring, and community input.",
+    examples: ["Modelled futures", "Capability benchmarks", "Shared learning cadences"],
   },
 ];
+
+export const valueStack = validateData<ValueLayer>(
+  "valueStack",
+  ValueStackSchema,
+  rawValueStack
+);

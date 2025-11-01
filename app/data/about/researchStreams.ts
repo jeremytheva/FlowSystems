@@ -1,4 +1,6 @@
-export const researchStreams = [
+import { ResearchStreamSchema, validateData } from "../../lib/validateData";
+
+const rawResearchStreams = [
   {
     name: "Executive Systems Council",
     cadence: "Monthly",
@@ -18,3 +20,9 @@ export const researchStreams = [
     artifact: "Live dashboards & anomaly alerts",
   },
 ];
+
+export const researchStreams = validateData(
+  "researchStreams",
+  ResearchStreamSchema,
+  rawResearchStreams
+);

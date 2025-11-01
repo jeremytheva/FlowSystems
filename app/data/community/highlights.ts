@@ -1,6 +1,10 @@
 import type { CommunityHighlights } from "../../lib/types";
+import {
+  CommunityHighlightsSchema,
+  validateSingleton,
+} from "../../lib/validateData";
 
-export const communityHighlights: CommunityHighlights = {
+const rawCommunityHighlights: CommunityHighlights = {
   spotlight: {
     name: "Signals Guild",
     description:
@@ -31,3 +35,9 @@ export const communityHighlights: CommunityHighlights = {
     "Opened 8 mentor tracks focused on enablement",
   ],
 };
+
+export const communityHighlights = validateSingleton<CommunityHighlights>(
+  "communityHighlights",
+  CommunityHighlightsSchema,
+  rawCommunityHighlights
+);

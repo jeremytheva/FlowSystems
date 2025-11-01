@@ -1,6 +1,7 @@
 import type { Platform } from "../../lib/types";
+import { PlatformSchema, validateData } from "../../lib/validateData";
 
-export const platforms: Platform[] = [
+const rawPlatforms: Platform[] = [
   {
     id: "navigator",
     name: "Navigator",
@@ -111,3 +112,9 @@ export const platforms: Platform[] = [
     integrations: ["Gainsight", "ChurnZero", "Snowflake", "Slack", "Gong"],
   },
 ];
+
+export const platforms = validateData<Platform>(
+  "platforms",
+  PlatformSchema,
+  rawPlatforms
+);

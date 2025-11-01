@@ -1,4 +1,6 @@
-export const searchFilters = [
+import { SearchResultSchema, StringSchema, validateData } from "../lib/validateData";
+
+const rawSearchFilters = [
   "Platforms",
   "Reviews",
   "Stacks",
@@ -6,7 +8,7 @@ export const searchFilters = [
   "Playbooks",
 ];
 
-export const searchResults = [
+const rawSearchResults = [
   {
     id: "navigator",
     type: "Platform",
@@ -29,3 +31,15 @@ export const searchResults = [
     href: "/stack/growth-foundation",
   },
 ];
+
+export const searchFilters = validateData(
+  "searchFilters",
+  StringSchema,
+  rawSearchFilters
+);
+
+export const searchResults = validateData(
+  "searchResults",
+  SearchResultSchema,
+  rawSearchResults
+);

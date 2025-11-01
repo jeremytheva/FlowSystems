@@ -1,4 +1,6 @@
-export const principles = [
+import { PrincipleSchema, validateData } from "../../lib/validateData";
+
+const rawPrinciples = [
   {
     title: "Outcomes Before Artifacts",
     description: "Every deliverable anchors on measurable business outcomes and leading indicators.",
@@ -16,3 +18,9 @@ export const principles = [
     description: "We use telemetry, interviews, and experiments to drive prioritization.",
   },
 ];
+
+export const principles = validateData(
+  "principles",
+  PrincipleSchema,
+  rawPrinciples
+);

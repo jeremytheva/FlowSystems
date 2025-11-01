@@ -1,13 +1,18 @@
 import type { DashboardMetric, DashboardWorkstream } from "../../lib/types";
+import {
+  DashboardMetricSchema,
+  DashboardWorkstreamSchema,
+  validateData,
+} from "../../lib/validateData";
 
-export const dashboardMetrics: DashboardMetric[] = [
+const rawDashboardMetrics: DashboardMetric[] = [
   { title: "Activation Health", value: "92", change: "+5 MoM", status: "up" },
   { title: "Revenue Influence", value: "$1.8M", change: "+$240k", status: "up" },
   { title: "Program NPS", value: "61", change: "+3", status: "steady" },
   { title: "Experiment Velocity", value: "27", change: "-4", status: "down" },
 ];
 
-export const workstreams: DashboardWorkstream[] = [
+const rawWorkstreams: DashboardWorkstream[] = [
   {
     id: "scale-insight-hub",
     name: "Scale Insight Hub",
@@ -30,3 +35,15 @@ export const workstreams: DashboardWorkstream[] = [
     nextAction: "Validate play variants with CS leadership",
   },
 ];
+
+export const dashboardMetrics = validateData<DashboardMetric>(
+  "dashboardMetrics",
+  DashboardMetricSchema,
+  rawDashboardMetrics
+);
+
+export const workstreams = validateData<DashboardWorkstream>(
+  "workstreams",
+  DashboardWorkstreamSchema,
+  rawWorkstreams
+);

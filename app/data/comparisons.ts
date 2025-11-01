@@ -1,6 +1,7 @@
 import type { ComparisonMatrix } from "../lib/types";
+import { ComparisonMatrixSchema, validateData } from "../lib/validateData";
 
-export const comparisons: ComparisonMatrix[] = [
+const rawComparisons: ComparisonMatrix[] = [
   {
     id: "navigator-vs-pulse",
     title: "Navigator vs Pulse Desk",
@@ -35,3 +36,9 @@ export const comparisons: ComparisonMatrix[] = [
     ],
   },
 ];
+
+export const comparisons = validateData<ComparisonMatrix>(
+  "comparisons",
+  ComparisonMatrixSchema,
+  rawComparisons
+);
