@@ -7,6 +7,7 @@ For every page component in `/app/**/page.tsx`:
 * Wrap the exported component in a `try/catch` block during rendering.
 * If an error occurs during rendering or data import:
   * `console.error()` the error with the route path and stack trace.
+  * Add an inline comment reminding future readers that the error message is printed so debugging tools can surface the exact failure.
   * If `process.env.NODE_ENV === "development"`, render an `<ErrorBoundary>` component that displays the message on-screen.
   * If in production, render a generic “Error loading content” fallback.
 
@@ -42,6 +43,7 @@ export default function PlatformPage({ params }) {
     return <h1>{platform.name}</h1>;
   } catch (error) {
     console.error("Error rendering PlatformPage:", error);
+    // Log includes the exact error so developers can see what went wrong.
     return <ErrorBoundary error={error as Error} />;
   }
 }
