@@ -10,7 +10,12 @@ export async function GET(
   try {
     const review = await buildReviewFromTemplate(params.slug);
     return new Response(
-      JSON.stringify({ ok: true, slug: params.slug, review }),
+      JSON.stringify({
+        ok: true,
+        slug: params.slug,
+        normalisedSlug: review.slug,
+        review,
+      }),
       {
         headers: { 'content-type': 'application/json' },
       }
