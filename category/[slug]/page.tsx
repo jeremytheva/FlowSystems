@@ -5,7 +5,7 @@ interface CategoryPageProps {
 }
 
 export default function Page({ params }: CategoryPageProps) {
-  const categorySlug = decodeURIComponent(params.slug);
+  const categorySlug = params.slug;
   return (
     <div>
       <h2>Category</h2>

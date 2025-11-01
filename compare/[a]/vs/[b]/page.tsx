@@ -6,8 +6,8 @@ interface ComparePageProps {
 }
 
 export default function Page({ params }: ComparePageProps) {
-  const first = decodeURIComponent(params.a);
-  const second = decodeURIComponent(params.b);
+  const first = params.a;
+  const second = params.b;
   return (
     <div>
       <h2>Comparison</h2>
