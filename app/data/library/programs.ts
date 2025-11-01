@@ -1,6 +1,7 @@
 import type { FlowProgram } from "../../lib/types";
+import { FlowProgramSchema, validateData } from "../../lib/validateData";
 
-export const featuredPrograms: FlowProgram[] = [
+const rawFeaturedPrograms: FlowProgram[] = [
   {
     slug: "insight-hub",
     name: "Insight Hub",
@@ -44,3 +45,9 @@ export const featuredPrograms: FlowProgram[] = [
     recommendedSignals: ["Ritual completion", "Decision latency"],
   },
 ];
+
+export const featuredPrograms = validateData<FlowProgram>(
+  "featuredPrograms",
+  FlowProgramSchema,
+  rawFeaturedPrograms
+);

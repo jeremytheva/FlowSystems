@@ -1,4 +1,6 @@
-export const deliveryPhases = [
+import { DeliveryPhaseSchema, validateData } from "../../lib/validateData";
+
+const rawDeliveryPhases = [
   {
     phase: "Discover",
     purpose: "Map current-state systems, friction, and desired outcomes.",
@@ -36,3 +38,9 @@ export const deliveryPhases = [
     ],
   },
 ];
+
+export const deliveryPhases = validateData(
+  "deliveryPhases",
+  DeliveryPhaseSchema,
+  rawDeliveryPhases
+);
