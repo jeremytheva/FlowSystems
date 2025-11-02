@@ -1,48 +1,46 @@
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
-diff --git a/vercel.json b/vercel.json
-index b30530b83c9e207ad6e367ec15beac7016da35b4..3cd40a099866835e2465181b5d337134a07a286a 100644
---- a/vercel.json
-+++ b/vercel.json
-@@ -9,39 +9,38 @@
-   ],
-   "framework": "nextjs",
-   "installCommand": "npm install",
-   "buildCommand": "npm run build",
-   "outputDirectory": ".next",
-   "ignoreCommand": "git diff --quiet HEAD^ HEAD ./",
-   "env": {
-     "NEXT_PUBLIC_APP_ENV": "production",
-     "NEXT_TELEMETRY_DISABLED": "1",
-     "NODE_ENV": "production"
-   },
-   "routes": [
-     {
-       "src": "/api/(.*)",
-       "dest": "/api/$1"
-     },
-     {
-       "src": "/(.*)",
-       "dest": "/$1"
-     }
-   ],
-   "headers": [
-     {
-       "source": "/(.*)",
-       "headers": [
--        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
-         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-         { "key": "X-Content-Type-Options", "value": "nosniff" },
-         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-       ]
-     }
-   ],
-   "regions": ["iad1", "syd1"],
-   "github": {
-     "enabled": true,
-     "autoJobCancelation": true,
-     "silent": false
-   }
- }
- 
-EOF
-)
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": [
+    {
+      "source": "app/api/**/*",
+      "runtime": "edge"
+    }
+  ],
+  "framework": "nextjs",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./",
+  "env": {
+    "NEXT_PUBLIC_APP_ENV": "production",
+    "NEXT_TELEMETRY_DISABLED": "1",
+    "NODE_ENV": "production"
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ],
+  "regions": ["iad1", "syd1"],
+  "github": {
+    "enabled": true,
+    "autoJobCancelation": true,
+    "silent": false
+  }
+}
