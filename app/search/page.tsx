@@ -24,3 +24,31 @@ import { searchFilters, searchResults } from "../data/search";
         ))}
       </Section>
     </div>
+
+                        export default function Page() {
+  return (
+    <div className="mx-auto max-w-4xl space-y-8 px-6 py-12">
+      <header className="space-y-3">
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">
+          Search
+        </p>
+        <h1 className="text-4xl font-bold text-slate-900">
+          Find flows, reviews, and stacks
+        </h1>
+      </header>
+
+      <div className="space-y-4">
+        <p className="text-sm text-slate-600">
+          Type a keyword to find platforms, comparisons, or insights from the FlowSystems library.
+        </p>
+        {/* TODO: Replace with real search component */}
+        <input
+          type="text"
+          placeholder="Search FlowSystems..."
+          className="w-full rounded-md border border-slate-300 px-4 py-2 text-slate-800 placeholder-slate-400 focus:border-indigo-500 focus:ring-indigo-500"
+        />
+      </div>
+    </div>
+  );
+}
+
