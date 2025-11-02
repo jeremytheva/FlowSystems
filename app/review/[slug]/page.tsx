@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { Section } from "@/app/components/Section";
-import { platforms } from "@/app/data/catalog/platforms";
+import { Section } from "@/components/Section";
+import { platforms } from "@/data/catalog/platforms";
 import {
   InvalidReviewSlugError,
   buildReviewFromTemplate,
