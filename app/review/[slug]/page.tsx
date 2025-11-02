@@ -2,7 +2,10 @@ import { notFound } from "next/navigation";
 
 import { Section } from "@/app/components/Section";
 import { platforms } from "@/app/data/catalog/platforms";
-import { buildReviewFromTemplate } from "@/app/lib/content/review-template";
+import {
+  InvalidReviewSlugError,
+  buildReviewFromTemplate,
+} from "@/app/lib/content/review-template";
 
 export const dynamic = "force-dynamic";
 
@@ -18,12 +21,24 @@ export function generateStaticParams() {
   }
 }
 
+type Review = Awaited<ReturnType<typeof buildReviewFromTemplate>>;
+
 export default async function Page({ params }: { params: { slug: string } }) {
-  if (!reviewSlugs.includes(params.slug)) {
-    notFound();
+  let review: Review;
+
+  try {
+    review = await buildReviewFromTemplate(params.slug);
+  } catch (error) {
+    if (error instanceof InvalidReviewSlugError) {
+      notFound();
+    }
+
+    throw error;
   }
 
-  const review = await buildReviewFromTemplate(params.slug);
+  if (!reviewSlugs.includes(review.slug)) {
+    notFound();
+  }
 
   return (
     <div className="mx-auto max-w-4xl space-y-10 px-6 py-12">
