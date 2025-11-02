@@ -71,6 +71,9 @@ Clear decision with “choose if / skip if” bullets.
 <SetupEstimator defaults={{ imports: 1, automations: 1, users: 1 }} />
 <SnapshotPoll question="Was this helpful?" options={["Yes","No"]} />`;
 
+const REVIEW_SLUG_SUFFIX = '-review';
+const REVIEW_SLUG_BODY_PATTERN = /^[a-z0-9-]+$/;
+
 export class InvalidReviewSlugError extends Error {
   constructor(message: string) {
     super(message);
@@ -92,22 +95,66 @@ function applyReplacements(source: string, replacements: Record<string, string>)
   }, source);
 }
 
-function normaliseSlug(slug: string) {
-  if (!slug || !slug.endsWith('-review')) {
+function normaliseSlug(slug: string): { baseSlug: string; normalisedSlug: string } {
+  const rawSlug = typeof slug === 'string' ? slug : '';
+
+  let decodedSlug = rawSlug;
+  try {
+    decodedSlug = decodeURIComponent(rawSlug);
+  } catch (error) {
+    console.warn('Failed to decode review slug', rawSlug, error);
+  }
+
+  const trimmed = decodedSlug.trim();
+
+  if (!trimmed) {
+    console.warn('Received empty review slug');
     throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
   }
 
-  const baseSlug = slug.replace(/-review$/, '');
+  const withoutTrailingSlash = trimmed.replace(/\/+$/, '');
 
-  if (!baseSlug) {
+  if (!withoutTrailingSlash) {
+    console.warn('Received review slug with only slashes');
     throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
   }
 
-  return baseSlug;
+  const hyphenated = withoutTrailingSlash.replace(/\s+/g, '-');
+  const safeCharacters = hyphenated.replace(/[^a-zA-Z0-9-]/g, '-');
+  const collapsedHyphens = safeCharacters.replace(/-+/g, '-');
+  const cleanedSlugBody = collapsedHyphens.replace(/^-|-$/g, '');
+
+  if (!cleanedSlugBody) {
+    console.warn('Failed to clean review slug', slug);
+    throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
+  }
+
+  if (cleanedSlugBody.toLowerCase() === 'review') {
+    console.warn('Received review slug without identifier', slug);
+    throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
+  }
+
+  const lowerCaseSlug = cleanedSlugBody.toLowerCase();
+
+  const normalisedSlug = lowerCaseSlug.endsWith(REVIEW_SLUG_SUFFIX)
+    ? lowerCaseSlug
+    : `${lowerCaseSlug}${REVIEW_SLUG_SUFFIX}`;
+
+  const baseSlug = normalisedSlug.slice(0, -REVIEW_SLUG_SUFFIX.length);
+
+  if (!baseSlug || !REVIEW_SLUG_BODY_PATTERN.test(baseSlug)) {
+    console.warn('Failed to derive base slug from review slug', slug);
+    throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
+  }
+
+  return {
+    baseSlug,
+    normalisedSlug,
+  };
 }
 
 export async function buildReviewFromTemplate(slug: string): Promise<ReviewContent> {
-  const baseSlug = normaliseSlug(slug);
+  const { baseSlug, normalisedSlug } = normaliseSlug(slug);
   const platformName = toTitleCase(baseSlug);
   const defaultCategory = baseSlug.includes('-')
     ? baseSlug.split('-')[0]
@@ -122,7 +169,7 @@ export async function buildReviewFromTemplate(slug: string): Promise<ReviewConte
 
   return {
     title: applyReplacements(REVIEW_TITLE_TEMPLATE, replacements),
-    slug,
+    slug: normalisedSlug,
     platformId: applyReplacements(REVIEW_PLATFORM_ID_TEMPLATE, replacements),
     score: 0,
     status: REVIEW_STATUS_TEMPLATE,
