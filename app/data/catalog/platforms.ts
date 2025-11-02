@@ -159,6 +159,8 @@ const rawPlatforms: Platform[] = [
   },
 ];
 
+console.log("[build] Loading platform data...");
+
 /**
  * Validate and export.
  * In dev, print any validation errors directly to console and rethrow them

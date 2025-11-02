@@ -2,6 +2,8 @@ import "./globals.css";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+console.log("[build] Layout loaded");
+
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/platform/navigator", label: "Platforms" },
