@@ -5,7 +5,7 @@ import { platforms } from "@/data/catalog/platforms";
 import {
   InvalidReviewSlugError,
   buildReviewFromTemplate,
-} from "@/app/lib/content/review-template";
+} from "@/lib/content/review-template";
 
 export const dynamic = "force-dynamic";
 
