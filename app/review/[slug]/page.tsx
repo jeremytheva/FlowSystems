@@ -1,12 +1,21 @@
 import { notFound } from "next/navigation";
-import { Section } from "../../components/Section";
-import { platforms } from "../../data/catalog/platforms";
-import { buildReviewFromTemplate } from "../../lib/content/review-template";
+
+import { Section } from "@/app/components/Section";
+import { platforms } from "@/app/data/catalog/platforms";
+import { buildReviewFromTemplate } from "@/app/lib/content/review-template";
+
+export const dynamic = "force-dynamic";
 
 const reviewSlugs = platforms.map((platform) => `${platform.id}-review`);
 
 export function generateStaticParams() {
-  return reviewSlugs.map((slug) => ({ slug }));
+  try {
+    console.log("[build] Generating static params for reviews:", reviewSlugs.length);
+    return reviewSlugs.map((slug) => ({ slug }));
+  } catch (error) {
+    console.error("[build] Failed to generate review slugs:", error);
+    return [];
+  }
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {

@@ -1,10 +1,19 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Section } from "../../components/Section";
-import { platforms } from "../../data/catalog/platforms";
+
+import { Section } from "@/app/components/Section";
+import { platforms } from "@/app/data/catalog/platforms";
+
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
-  return platforms.map((platform) => ({ slug: platform.id }));
+  try {
+    console.log("[build] Generating static params for platforms:", platforms.length);
+    return platforms.map((platform) => ({ slug: platform.id }));
+  } catch (error) {
+    console.error("[build] Failed to load platforms:", error);
+    return [];
+  }
 }
 
 export default function PlatformPage({ params }: { params: { slug: string } }) {
