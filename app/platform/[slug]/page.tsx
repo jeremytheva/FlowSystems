@@ -1,16 +1,42 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Section } from "../../components/Section";
-import { platforms } from "../../data/catalog/platforms";
+
+import { Section } from "@/app/components/Section";
+import { platforms } from "@/app/data/catalog/platforms";
+
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
-  return platforms.map((platform) => ({ slug: platform.id }));
+  try {
+    console.log("[build] Generating static params for platforms:", platforms.length);
+    return platforms.map((platform) => ({ slug: platform.id }));
+  } catch (error) {
+    console.error("[build] Failed to load platforms:", error);
+    return [];
+  }
+}
+
+function normalisePlatformSlug(rawSlug: string) {
+  if (!rawSlug) {
+    return "";
+  }
+
+  let decoded = rawSlug;
+  try {
+    decoded = decodeURIComponent(rawSlug);
+  } catch (error) {
+    console.warn("[platform] Failed to decode slug", rawSlug, error);
+  }
+
+  return decoded.trim().toLowerCase();
 }
 
 export default function PlatformPage({ params }: { params: { slug: string } }) {
-  const platform = platforms.find((item) => item.id === params.slug);
+  const slug = normalisePlatformSlug(params.slug);
+  const platform = platforms.find((item) => item.id === slug);
 
   if (!platform) {
+    console.warn("[platform] Missing platform for slug", params.slug);
     notFound();
   }
 
