@@ -1,20 +1,41 @@
 import { notFound } from "next/navigation";
-import { Section } from "../../components/Section";
-import { platforms } from "../../data/catalog/platforms";
-import { buildReviewFromTemplate } from "../../lib/content/review-template";
+
+import { Section } from "@/app/components/Section";
+import { platforms } from "@/app/data/catalog/platforms";
+import {
+  buildReviewFromTemplate,
+  InvalidReviewSlugError,
+} from "@/app/lib/content/review-template";
+
+export const dynamic = "force-dynamic";
 
 const reviewSlugs = platforms.map((platform) => `${platform.id}-review`);
+const reviewSlugSet = new Set(reviewSlugs);
 
 export function generateStaticParams() {
-  return reviewSlugs.map((slug) => ({ slug }));
+  try {
+    console.log("[build] Generating static params for reviews:", reviewSlugs.length);
+    return reviewSlugs.map((slug) => ({ slug }));
+  } catch (error) {
+    console.error("[build] Failed to generate review slugs:", error);
+    return [];
+  }
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  if (!reviewSlugs.includes(params.slug)) {
-    notFound();
+  let review;
+  try {
+    review = await buildReviewFromTemplate(params.slug);
+  } catch (error) {
+    if (error instanceof InvalidReviewSlugError) {
+      notFound();
+    }
+    throw error;
   }
 
-  const review = await buildReviewFromTemplate(params.slug);
+  if (!reviewSlugSet.has(review.slug)) {
+    notFound();
+  }
 
   return (
     <div className="mx-auto max-w-4xl space-y-10 px-6 py-12">
