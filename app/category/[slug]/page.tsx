@@ -5,6 +5,10 @@ import { categories } from "../../data/catalog/categories";
 import { platforms } from "../../data/catalog/platforms";
 import { featuredPrograms } from "../../data/library/programs";
 
+export const dynamic = "force-dynamic";
+
+console.log("[build] Category page loaded");
+
 interface CategoryPageProps {
   params: { slug: string };
 }
