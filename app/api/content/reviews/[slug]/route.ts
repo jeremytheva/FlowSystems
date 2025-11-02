@@ -1,7 +1,7 @@
 import {
   buildReviewFromTemplate,
   InvalidReviewSlugError,
-} from "@/app/lib/content/review-template";
+} from "@/lib/content/review-template";
 
 export async function GET(
   _req: Request,
