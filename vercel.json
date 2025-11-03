@@ -20,7 +20,7 @@
       ]
     }
   ],
-  "regions": ["iad1", "syd1"],
+  "regions": ["syd1"],
   "github": {
     "enabled": true,
     "autoJobCancelation": true,
