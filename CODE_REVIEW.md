@@ -43,3 +43,10 @@
 - The search (`app/search/page.tsx`), newsletter (`app/newsletter/page.tsx`), and comparison placeholders return only headings. Introduce mock form controls (search input, filter pills, signup form) and sample result lists so stakeholders can click through the intended journeys.
 - A comparison experience is entirely missing even though it is a core route. Create `/app/compare/page.tsx` (and, if needed, `/app/compare/[slug]/page.tsx`) that showcases how two platforms line up across metrics, using the same data fixtures as the platform pages.
 
+## 11. Global layout & navigation polish (`app/layout.tsx`, `app/components/navigation/MainNav.tsx`)
+- `RootLayout` logs a message during every server render (`console.log("[build] Layout loaded")`), which will flood the serverless function logs once traffic increases. Remove the log or guard it behind an environment flag so production builds stay clean.
+- The `<body>` element receives typography and background classes both in `app/globals.css` and directly in `app/layout.tsx`. Centralising the base styles in `globals.css` keeps the HTML skeleton lean and reduces the risk of the two diverging when the palette changes.
+- Footer links (`Newsletter`, `Community`) are hard-coded in `RootLayout`, while the header pulls from the `navLinks` array. Export the shared link data (or create a footer-specific list) so future navigation edits only require updating one source of truth.
+- `MainNav` collapses automatically when `pathname` changes, but it does not close when keyboard users tab away or when the focus leaves the menu. Consider listening for `onBlur`/`onFocusWithin` events or adding an overlay button so the drawer can dismiss without navigating.
+- The mobile drawer wraps the subscription CTA in a static block. Pulling that content into a reusable component would make it easier to reuse on other pages (e.g., newsletter landing, footer banner) while keeping copy in sync.
+

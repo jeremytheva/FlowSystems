@@ -1,19 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
-import { cn } from "../../lib/utils";
+import { moduleRegistry } from "@modules/index";
+import { cn } from "@/lib/utils";
 
 export const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/platform/navigator", label: "Platforms" },
-  { href: "/category/intelligence-ops", label: "Categories" },
-  { href: "/review/navigator-review", label: "Reviews" },
-  { href: "/compare", label: "Comparisons" },
-  { href: "/dashboard", label: "Dashboard" },
+  { href: "/modules", label: "Modules" },
+  ...moduleRegistry.map((module) => ({
+    href: `/modules/${module.slug}`,
+    label: module.name,
+  })),
 ];
 
 const primaryCta = { href: "/newsletter", label: "Weekly Briefing" };
@@ -21,6 +22,7 @@ const primaryCta = { href: "/newsletter", label: "Weekly Briefing" };
 export function MainNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const navItems = useMemo(() => navLinks, []);
 
   useEffect(() => {
     setIsOpen(false);
@@ -45,7 +47,7 @@ export function MainNav() {
         </Link>
         <div className="hidden items-center gap-6 md:flex">
           <ul className="flex items-center gap-1 text-sm font-medium text-slate-600">
-            {navLinks.map((link) => (
+            {navItems.map((link) => (
               <li key={link.href}>
                 <Link
                   className={cn(
@@ -90,7 +92,7 @@ export function MainNav() {
         id="primary-navigation"
       >
         <ul className="space-y-2">
-          {navLinks.map((link) => (
+          {navItems.map((link) => (
             <li key={link.href}>
               <Link
                 className={cn(
