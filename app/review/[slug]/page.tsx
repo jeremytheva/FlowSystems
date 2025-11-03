@@ -10,6 +10,7 @@ import {
 export const dynamic = "force-dynamic";
 
 const reviewSlugs = platforms.map((platform) => `${platform.id}-review`);
+const reviewSlugSet = new Set(reviewSlugs);
 
 export function generateStaticParams() {
   try {

@@ -47,6 +47,7 @@ export default function PlatformPage({ params }: PlatformPageParams) {
   const platform = platforms.find((item) => item.id === params.slug);
 
   if (!platform) {
+    console.warn("[platform] Missing platform for slug", params.slug);
     notFound();
   }
 
