@@ -20,6 +20,13 @@
       ]
     }
   ],
+  "redirects": [
+    { "source": "/define", "destination": "/modules/strategyflow", "permanent": false },
+    { "source": "/attract", "destination": "/modules/attractflow", "permanent": false },
+    { "source": "/serve", "destination": "/modules/serveflow", "permanent": false },
+    { "source": "/evolve", "destination": "/modules/evolveflow", "permanent": false },
+    { "source": "/govern", "destination": "/modules/governflow", "permanent": false }
+  ],
   "regions": ["syd1"],
   "github": {
     "enabled": true,

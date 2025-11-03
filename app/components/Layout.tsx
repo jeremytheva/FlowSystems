@@ -1,14 +1,17 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { moduleRegistry } from "@modules/index";
+
 import { CurrentYear } from "./CurrentYear";
 
 const navigationLinks = [
-  { href: "/define", label: "Define" },
-  { href: "/attract", label: "Attract" },
-  { href: "/serve", label: "Serve" },
-  { href: "/evolve", label: "Evolve" },
-  { href: "/govern", label: "Govern" },
+  { href: "/", label: "Home" },
+  { href: "/modules", label: "Modules" },
+  ...moduleRegistry.map((module) => ({
+    href: `/modules/${module.slug}`,
+    label: module.name,
+  })),
 ];
 
 export function Layout({ children }: { children: ReactNode }) {
