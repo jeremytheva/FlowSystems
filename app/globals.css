@@ -16,6 +16,12 @@
     --fs-gradient-surface: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.18), transparent 55%),
       radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.2), transparent 50%),
       radial-gradient(circle at 50% 100%, rgba(45, 212, 191, 0.18), transparent 60%);
+    --fs-color-primary: 99 102 241;
+    --fs-color-primary-strong: 79 70 229;
+    --fs-color-accent: 139 92 246;
+    --fs-color-accent-strong: 124 58 237;
+    --fs-color-surface: 255 255 255;
+    --radius: 6px;
   }
 
   * {
@@ -42,6 +48,50 @@
 }
 
 @layer utilities {
+  .bg-primary {
+    @apply bg-indigo-500;
+  }
+
+  .hover\:bg-primary-strong:hover {
+    @apply bg-indigo-600;
+  }
+
+  .bg-accent {
+    @apply bg-violet-500;
+  }
+
+  .hover\:bg-accent-strong:hover {
+    @apply bg-violet-600;
+  }
+
+  .bg-primary-soft {
+    @apply bg-indigo-50;
+  }
+
+  .hover\:bg-primary-soft:hover {
+    @apply bg-indigo-50;
+  }
+
+  .bg-surface {
+    @apply bg-white;
+  }
+
+  .text-primary {
+    @apply text-indigo-500;
+  }
+
+  .hover\:text-primary:hover {
+    @apply text-indigo-500;
+  }
+
+  .border-primary {
+    @apply border-indigo-500;
+  }
+
+  .card {
+    border-radius: var(--radius);
+  }
+
   .glass-panel {
     @apply border border-white/10 bg-white/60 shadow-xl backdrop-blur;
   }
