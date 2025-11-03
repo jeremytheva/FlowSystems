@@ -31,19 +31,21 @@ export function Section<T extends ElementType = "section">({
   return (
     <Component
       className={cn(
-        "space-y-4 rounded-xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur",
+        "space-y-6 rounded-[var(--fs-radius-lg)] border border-slate-200/60 bg-white/75 p-6 shadow-lg shadow-slate-900/5 supports-[backdrop-filter]:backdrop-blur",
         className,
       )}
       {...rest}
     >
-      <header className="space-y-2">
+      <header className="space-y-3">
         {eyebrow ? (
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{eyebrow}</p>
+          <p className="inline-flex items-center rounded-full bg-slate-900/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-600">
+            {eyebrow}
+          </p>
         ) : null}
-        <h2 className="text-2xl font-semibold text-slate-900">{title}</h2>
-        {description ? <p className="max-w-2xl text-sm text-slate-600">{description}</p> : null}
+        <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl">{title}</h2>
+        {description ? <p className="max-w-2xl text-sm text-slate-600 sm:text-base">{description}</p> : null}
       </header>
-      <div className={cn(contentClassName ?? "space-y-4")}>{children}</div>
+      <div className={cn("space-y-4", contentClassName)}>{children}</div>
     </Component>
   );
 }
