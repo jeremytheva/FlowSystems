@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Production build artifacts
+build/
+dist/
+
+# Environment files
+.env*
+
+# Logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+.DS_Store
