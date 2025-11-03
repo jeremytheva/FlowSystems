@@ -12,6 +12,8 @@ import { systemMetrics } from "./data/metrics";
 import { upcomingReleases } from "./data/roadmap";
 import { valueStack } from "./data/valueStack";
 
+console.log("[build] Page.tsx loaded successfully");
+
 const heroHighlights = [
   "Wizard complete → Outcomes library unlocked",
   "Stack opened → Composable flows ready for activation",
