@@ -3,17 +3,9 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { CurrentYear } from "./components/CurrentYear";
+import { MainNav } from "./components/navigation/MainNav";
 
 console.log("[build] Layout loaded");
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/platform/navigator", label: "Platforms" },
-  { href: "/category/intelligence-ops", label: "Categories" },
-  { href: "/review/navigator-review", label: "Reviews" },
-  { href: "/compare", label: "Comparisons" },
-  { href: "/dashboard", label: "Dashboard" },
-];
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -23,18 +15,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           Skip to content
         </a>
         <div className="flex min-h-screen flex-col">
-          <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
-            <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-              <Link className="text-lg font-semibold text-slate-900" href="/">
-                FlowSystems
-              </Link>
-              <nav className="flex items-center gap-4 text-sm font-medium text-slate-600">
-                {navLinks.map((link) => (
-                  <Link key={link.href} className="rounded-md px-3 py-2 hover:bg-slate-100" href={link.href}>
-                    {link.label}
-                  </Link>
-                ))}
-              </nav>
+          <header className="sticky top-0 z-50 border-b border-transparent bg-gradient-to-b from-white/90 via-white/70 to-white/30 backdrop-blur-xl">
+            <div className="mx-auto max-w-6xl px-6 py-5">
+              <MainNav />
             </div>
           </header>
           <main id="main-content" className="flex-1">
