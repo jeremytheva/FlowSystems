@@ -1,44 +1,16 @@
 import "./globals.css";
-import Link from "next/link";
+import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 
-import { CurrentYear } from "./components/CurrentYear";
-import { MainNav } from "./components/navigation/MainNav";
+import { Layout } from "./components/Layout";
 
-console.log("[build] Layout loaded");
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-slate-50 font-sans text-slate-900">
-        <a className="sr-only focus:not-sr-only" href="#main-content">
-          Skip to content
-        </a>
-        <div className="flex min-h-screen flex-col">
-          <header className="sticky top-0 z-50 border-b border-transparent bg-gradient-to-b from-white/90 via-white/70 to-white/30 backdrop-blur-xl">
-            <div className="mx-auto max-w-6xl px-6 py-5">
-              <MainNav />
-            </div>
-          </header>
-          <main id="main-content" className="flex-1">
-            {children}
-          </main>
-          <footer className="border-t border-slate-200 bg-white/90">
-            <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-              <p>
-                © <CurrentYear /> FlowSystems. Built for operators.
-              </p>
-              <div className="flex gap-4">
-                <Link className="hover:text-slate-700" href="/newsletter">
-                  Newsletter
-                </Link>
-                <Link className="hover:text-slate-700" href="/community">
-                  Community
-                </Link>
-              </div>
-            </div>
-          </footer>
-        </div>
+      <body className={inter.className}>
+        <Layout>{children}</Layout>
       </body>
     </html>
   );
