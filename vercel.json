@@ -7,6 +7,13 @@
       "use": "@vercel/next"
     }
   ],
+  "functions": [
+    {
+      "source": "app/api/**/*",
+      "runtime": "edge"
+    }
+  ],
+  "version": 2,
   "framework": "nextjs",
   "installCommand": "npm install",
   "buildCommand": "npm run build",
