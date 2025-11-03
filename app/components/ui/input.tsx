@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import { useId } from "react";
 import type { InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -9,7 +10,9 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function Input({ label, helperText, className, id, ...props }: InputProps) {
-  const inputId = id ?? (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
+  const reactId = useId();
+  const generatedId = `input-${reactId.replace(/:/g, "")}`;
+  const inputId = id ?? generatedId;
 
   return (
     <label className="block space-y-1" htmlFor={inputId}>
