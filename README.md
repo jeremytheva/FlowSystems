@@ -1,6 +1,6 @@
 # FlowSystems
 
-FlowSystems is a Next.js 14 application that showcases product research, platform evaluations, and automation workflows for modern go-to-market teams. It combines rich marketing pages with stubbed APIs and content templates so designers, engineers, and analysts can collaborate on end-to-end customer journeys before production data arrives.
+FlowSystems is a Next.js 14 application that showcases product research, platform evaluations, and automation workflows for modern go-to-market teams. It combines rich marketing pages with stubbed APIs and content templates so designers, engineers, and analysts can collaborate on end-to-end customer journeys before production data arrives. 
 
 ## Features
 - **Marketing & community pages** – Rich storytelling modules in `/app/page.tsx`, `/app/about`, and `/app/community` demonstrate methodology, rituals, and impact for prospective members.
