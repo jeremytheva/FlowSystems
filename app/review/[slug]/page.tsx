@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 
-import { Section } from "@/app/components/Section";
-import { platforms } from "@/app/data/catalog/platforms";
+import { Section } from "@/components/Section";
+import { platforms } from "@/data/catalog/platforms";
 import {
-  buildReviewFromTemplate,
   InvalidReviewSlugError,
-} from "@/app/lib/content/review-template";
+  buildReviewFromTemplate,
+} from "@/lib/content/review-template";
 
 export const dynamic = "force-dynamic";
 
@@ -22,20 +22,22 @@ export function generateStaticParams() {
   }
 }
 
+type Review = Awaited<ReturnType<typeof buildReviewFromTemplate>>;
+
 export default async function Page({ params }: { params: { slug: string } }) {
-  let review;
+  let review: Review;
+
   try {
     review = await buildReviewFromTemplate(params.slug);
   } catch (error) {
     if (error instanceof InvalidReviewSlugError) {
-      console.warn("[review] Invalid review slug", params.slug, error);
       notFound();
     }
+
     throw error;
   }
 
-  if (!reviewSlugSet.has(review.slug)) {
-    console.warn("[review] Review slug not in catalog", review.slug);
+  if (!reviewSlugs.includes(review.slug)) {
     notFound();
   }
 
