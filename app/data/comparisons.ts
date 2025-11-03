@@ -37,7 +37,7 @@ const rawComparisons: ComparisonMatrix[] = [
   },
 ];
 
-export const comparisons = validateData<ComparisonMatrix>(
+export const comparisons = validateData(
   "comparisons",
   ComparisonMatrixSchema,
   rawComparisons

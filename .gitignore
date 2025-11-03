@@ -9,6 +9,9 @@ out/
 build/
 dist/
 
+# Local font assets (bundled separately from source)
+public/fonts/
+
 # Environment files
 .env*
 

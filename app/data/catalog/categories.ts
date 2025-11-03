@@ -32,7 +32,7 @@ const rawCategories: FlowCategory[] = [
   },
 ];
 
-export const categories = validateData<FlowCategory>(
+export const categories = validateData(
   "categories",
   FlowCategorySchema,
   rawCategories

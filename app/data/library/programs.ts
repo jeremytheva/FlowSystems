@@ -46,7 +46,7 @@ const rawFeaturedPrograms: FlowProgram[] = [
   },
 ];
 
-export const featuredPrograms = validateData<FlowProgram>(
+export const featuredPrograms = validateData(
   "featuredPrograms",
   FlowProgramSchema,
   rawFeaturedPrograms

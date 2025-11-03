@@ -22,7 +22,7 @@ const rawUpcomingReleases: ReleaseItem[] = [
   },
 ];
 
-export const upcomingReleases = validateData<ReleaseItem>(
+export const upcomingReleases = validateData(
   "upcomingReleases",
   ReleaseItemSchema,
   rawUpcomingReleases

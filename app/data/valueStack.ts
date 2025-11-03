@@ -22,7 +22,7 @@ const rawValueStack: ValueLayer[] = [
   },
 ];
 
-export const valueStack = validateData<ValueLayer>(
+export const valueStack = validateData(
   "valueStack",
   ValueStackSchema,
   rawValueStack

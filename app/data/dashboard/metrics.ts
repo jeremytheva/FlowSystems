@@ -36,13 +36,13 @@ const rawWorkstreams: DashboardWorkstream[] = [
   },
 ];
 
-export const dashboardMetrics = validateData<DashboardMetric>(
+export const dashboardMetrics = validateData(
   "dashboardMetrics",
   DashboardMetricSchema,
   rawDashboardMetrics
 );
 
-export const workstreams = validateData<DashboardWorkstream>(
+export const workstreams = validateData(
   "workstreams",
   DashboardWorkstreamSchema,
   rawWorkstreams

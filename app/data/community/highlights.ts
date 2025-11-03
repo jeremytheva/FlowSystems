@@ -36,7 +36,7 @@ const rawCommunityHighlights: CommunityHighlights = {
   ],
 };
 
-export const communityHighlights = validateSingleton<CommunityHighlights>(
+export const communityHighlights = validateSingleton(
   "communityHighlights",
   CommunityHighlightsSchema,
   rawCommunityHighlights

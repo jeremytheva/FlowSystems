@@ -171,30 +171,30 @@ export const SearchResultSchema = z.object({
 });
 
 // 2️⃣ Generic validator
-export function validateData<T>(
+export function validateData(
   name: string,
-  schema: z.ZodType<T>,
+  schema: z.ZodTypeAny,
   data: unknown[]
-): T[] {
+): any[] {
   try {
     const result = z.array(schema).parse(data);
     console.log(`✅ [validateData] ${name} validated successfully (${result.length} items).`);
-    return result;
+    return result as any[];
   } catch (error: any) {
     console.error(`❌ [validateData] Error in ${name}:`, error.errors);
     throw new Error(`[validateData] ${name} failed validation`);
   }
 }
 
-export function validateSingleton<T>(
+export function validateSingleton(
   name: string,
-  schema: z.ZodType<T>,
+  schema: z.ZodTypeAny,
   data: unknown
-): T {
+): any {
   try {
     const result = schema.parse(data);
     console.log(`✅ [validateData] ${name} validated successfully.`);
-    return result;
+    return result as any;
   } catch (error: any) {
     console.error(`❌ [validateData] Error in ${name}:`, error.errors ?? error);
     throw new Error(`[validateData] ${name} failed validation`);

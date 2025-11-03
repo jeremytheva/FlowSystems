@@ -1,10 +1,12 @@
 "use client";
 
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { Section } from "../components/Section";
 import { SearchForm } from "../components/search/SearchForm";
 import { ResultsList } from "../components/search/ResultsList";
 import { searchFilters, searchResults } from "../data/search";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 export default function Page() {
   const [keyword, setKeyword] = useState("");

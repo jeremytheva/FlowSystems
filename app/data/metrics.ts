@@ -27,7 +27,7 @@ const rawSystemMetrics: SystemMetric[] = [
   },
 ];
 
-export const systemMetrics = validateData<SystemMetric>(
+export const systemMetrics = validateData(
   "systemMetrics",
   SystemMetricSchema,
   rawSystemMetrics

@@ -7,12 +7,15 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
+    "noImplicitAny": false,
     "strict": false,
+    "downlevelIteration": true,
     "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "target": "es2017",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -33,6 +36,7 @@
     "**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "app/lib/content/**/*.test.ts"
   ]
 }

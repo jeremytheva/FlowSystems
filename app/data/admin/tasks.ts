@@ -67,25 +67,25 @@ const rawBacklogItems: AdminTask[] = [
   },
 ];
 
-export const importQueue = validateData<AdminTask>(
+export const importQueue = validateData(
   "importQueue",
   AdminTaskSchema,
   rawImportQueue
 );
 
-export const publishingTasks = validateData<AdminTask>(
+export const publishingTasks = validateData(
   "publishingTasks",
   AdminTaskSchema,
   rawPublishingTasks
 );
 
-export const scoringTasks = validateData<AdminTask>(
+export const scoringTasks = validateData(
   "scoringTasks",
   AdminTaskSchema,
   rawScoringTasks
 );
 
-export const backlogItems = validateData<AdminTask>(
+export const backlogItems = validateData(
   "backlogItems",
   AdminTaskSchema,
   rawBacklogItems

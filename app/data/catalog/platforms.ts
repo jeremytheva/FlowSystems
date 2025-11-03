@@ -168,7 +168,7 @@ console.log("[build] Loading platform data...");
  */
 export const platforms = (() => {
   try {
-    return validateData<Platform>("platforms", PlatformSchema, rawPlatforms);
+    return validateData("platforms", PlatformSchema, rawPlatforms);
   } catch (error: any) {
     console.error("❌ Validation error in platforms.ts", error);
     if (process.env.NODE_ENV !== "production") {

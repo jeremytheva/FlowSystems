@@ -48,7 +48,7 @@ const rawStacks: StackPlay[] = [
   },
 ];
 
-export const stacks = validateData<StackPlay>(
+export const stacks = validateData(
   "stacks",
   StackPlaySchema,
   rawStacks
