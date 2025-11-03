@@ -71,6 +71,9 @@ Clear decision with “choose if / skip if” bullets.
 <SetupEstimator defaults={{ imports: 1, automations: 1, users: 1 }} />
 <SnapshotPoll question="Was this helpful?" options={["Yes","No"]} />`;
 
+const REVIEW_SLUG_SUFFIX = '-review';
+const REVIEW_SLUG_BODY_PATTERN = /^[a-z0-9-]+$/;
+
 export class InvalidReviewSlugError extends Error {
   constructor(message: string) {
     super(message);
@@ -93,7 +96,16 @@ function applyReplacements(source: string, replacements: Record<string, string>)
 }
 
 function normaliseSlug(slug: string): { baseSlug: string; normalisedSlug: string } {
-  const trimmed = slug?.trim();
+  const rawSlug = typeof slug === 'string' ? slug : '';
+
+  let decodedSlug = rawSlug;
+  try {
+    decodedSlug = decodeURIComponent(rawSlug);
+  } catch (error) {
+    console.warn('Failed to decode review slug', rawSlug, error);
+  }
+
+  const trimmed = decodedSlug.trim();
 
   if (!trimmed) {
     console.warn('Received empty review slug');
@@ -107,15 +119,30 @@ function normaliseSlug(slug: string): { baseSlug: string; normalisedSlug: string
     throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
   }
 
-  const lowerCaseSlug = withoutTrailingSlash.toLowerCase();
+  const hyphenated = withoutTrailingSlash.replace(/\s+/g, '-');
+  const safeCharacters = hyphenated.replace(/[^a-zA-Z0-9-]/g, '-');
+  const collapsedHyphens = safeCharacters.replace(/-+/g, '-');
+  const cleanedSlugBody = collapsedHyphens.replace(/^-|-$/g, '');
 
-  const normalisedSlug = lowerCaseSlug.endsWith('-review')
+  if (!cleanedSlugBody) {
+    console.warn('Failed to clean review slug', slug);
+    throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
+  }
+
+  if (cleanedSlugBody.toLowerCase() === 'review') {
+    console.warn('Received review slug without identifier', slug);
+    throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
+  }
+
+  const lowerCaseSlug = cleanedSlugBody.toLowerCase();
+
+  const normalisedSlug = lowerCaseSlug.endsWith(REVIEW_SLUG_SUFFIX)
     ? lowerCaseSlug
-    : `${lowerCaseSlug}-review`;
+    : `${lowerCaseSlug}${REVIEW_SLUG_SUFFIX}`;
 
-  const baseSlug = normalisedSlug.replace(/-review$/, '');
+  const baseSlug = normalisedSlug.slice(0, -REVIEW_SLUG_SUFFIX.length);
 
-  if (!baseSlug) {
+  if (!baseSlug || !REVIEW_SLUG_BODY_PATTERN.test(baseSlug)) {
     console.warn('Failed to derive base slug from review slug', slug);
     throw new InvalidReviewSlugError(`Unknown review slug: ${slug}`);
   }
