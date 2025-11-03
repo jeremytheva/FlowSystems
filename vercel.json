@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
   "builds": [
     {
       "src": "package.json",
@@ -44,6 +45,12 @@
       ]
     }
   ],
+  "error": {
+    "404": {
+      "src": "/.*",
+      "dest": "/not-found"
+    }
+  },
   "regions": ["iad1", "syd1"],
   "github": {
     "enabled": true,
