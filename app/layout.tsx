@@ -2,6 +2,8 @@ import "./globals.css";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { CurrentYear } from "./components/CurrentYear";
+
 console.log("[build] Layout loaded");
 
 const navLinks = [
@@ -40,7 +42,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </main>
           <footer className="border-t border-slate-200 bg-white/90">
             <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-              <p>© {new Date().getFullYear()} FlowSystems. Built for operators.</p>
+              <p>
+                © <CurrentYear /> FlowSystems. Built for operators.
+              </p>
               <div className="flex gap-4">
                 <Link className="hover:text-slate-700" href="/newsletter">
                   Newsletter

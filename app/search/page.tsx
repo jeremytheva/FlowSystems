@@ -189,7 +189,14 @@ export default function Page() {
 
     if (process.env.NODE_ENV === "development") {
       const renderError = error instanceof Error ? error : new Error(String(error));
-      return <ErrorBoundary error={renderError} />;
+      return (
+        <ErrorBoundary
+          error={{
+            message: renderError.message,
+            stack: renderError.stack,
+          }}
+        />
+      );
     }
 
     return (

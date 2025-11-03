@@ -1,4 +1,11 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": [
+    {
+      "source": "app/api/**/*",
+      "runtime": "edge"
+    }
+  ],
   "version": 2,
   "framework": "nextjs",
   "installCommand": "npm install",
@@ -24,6 +31,7 @@
     {
       "source": "/(.*)",
       "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
