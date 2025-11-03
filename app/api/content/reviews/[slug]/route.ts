@@ -1,7 +1,7 @@
 import {
   buildReviewFromTemplate,
   InvalidReviewSlugError,
-} from '../../../../lib/content/review-template';
+} from "@/lib/content/review-template";
 
 export async function GET(
   _req: Request,
@@ -25,7 +25,7 @@ export async function GET(
       return new Response(
         JSON.stringify({ ok: false, error: error.message }),
         {
-          status: 404,
+          status: 400,
           headers: { 'content-type': 'application/json' },
         }
       );
