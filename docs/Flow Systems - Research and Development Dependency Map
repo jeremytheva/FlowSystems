@@ -1,5 +1,4 @@
 graph TD
-    %% --- Stage 0: Foundations ---
     subgraph Stage0[Stage 0 – Foundational Systems]
         A0[0.1 Ontology & Schema Design]
         A1[0.2 Relationship & Hierarchy Model]
@@ -10,10 +9,9 @@ graph TD
 
     A0 --> A1 --> A2 --> A3 --> A4
 
-    %% --- Stage 1: Automation & Ethics ---
     subgraph Stage1[Stage 1 – Automation & Ethics]
         B0[1.1 Adaptive Intelligence & Automation Framework]
-        B1[1.2 Template Intelligence (Foundational)]
+        B1[1.2 Template Intelligence - Foundational]
         B2[1.3 Data Governance, Ethics & Trust]
     end
 
@@ -25,7 +23,7 @@ graph TD
     subgraph Stage2[Stage 2 – Behavioural Understanding]
         C0[2.1 Behavioural & Persona Intelligence]
         C1[2.2 FlowBot Personality & UX]
-        C2[2.3 Data Ethics (Iter 2)]
+        C2[2.3 Data Ethics Iter 2]
     end
 
     B0 --> C0
@@ -35,7 +33,7 @@ graph TD
     %% --- Stage 3: Context & Execution ---
     subgraph Stage3[Stage 3 – Context & Execution Intelligence]
         D0[3.1 Master Task & SmartEx System]
-        D1[3.2 Behavioural Engine (Iter 2)]
+        D1[3.2 Behavioural Engine - Iter 2]
         D2[3.3 FlowBot Integration Layer]
     end
 
@@ -47,8 +45,8 @@ graph TD
     %% --- Stage 4: Adaptive Interface ---
     subgraph Stage4[Stage 4 – Adaptive Interface & Workflow]
         E0[4.1 Adaptive Interface Architecture]
-        E1[4.2 FlowBot UX (Iter 2)]
-        E2[4.3 Template Intelligence (Iter 2)]
+        E1[4.2 FlowBot UX - Iter 2]
+        E2[4.3 Template Intelligence - Iter 2]
     end
 
     D0 --> E0
