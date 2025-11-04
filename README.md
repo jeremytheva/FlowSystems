@@ -46,7 +46,7 @@ FlowSystems is a Next.js 14 application that showcases product research, platfor
 - `app/api/**` – REST endpoints that validate requests with Zod and surface placeholder data for experiments.
 
 Consult [`REPO_STRUCTURE.md`](REPO_STRUCTURE.md) for a file-by-file walkthrough, completion status, and follow-up suggestions.
-R&D Map [`docs/rnd-map.md`] (rnd-map.md)
+R&D Map [`rnd-map.md`] (rnd-map.md)
 ## Contributing
 1. Fork the repository and create a feature branch.
 2. Make your changes and ensure `npm run lint` passes.
