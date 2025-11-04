@@ -1,12 +1,10 @@
-'''mermaid
+```mermaid
 graph TD
+    %% --- Stage 0: Foundations ---
     subgraph Stage0[Stage 0 – Foundational Systems]
-        A0[0.1 Ontology & Schema Design]
-        A1[0.2 Relationship & Hierarchy Model]
-        A2[0.3 Schema Standards]
-        A3[0.4 Metadata & Versioning Rules]
-        A4[0.5 Integration & Interoperability Mapping]
-    end
+        
+```
+
 
     A0 --> A1 --> A2 --> A3 --> A4
 
