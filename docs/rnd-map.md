@@ -3,8 +3,6 @@ graph TD
     %% --- Stage 0: Foundations ---
     subgraph Stage0[Stage 0 – Foundational Systems]
         
-```
-
 
     A0 --> A1 --> A2 --> A3 --> A4
 
@@ -74,4 +72,4 @@ graph TD
     C0 --> G0
     D0 --> G1
     F1 --> G2
-'''
+```
