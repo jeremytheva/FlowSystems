@@ -1,3 +1,4 @@
+'''mermaid
 graph TD
     subgraph Stage0[Stage 0 – Foundational Systems]
         A0[0.1 Ontology & Schema Design]
@@ -75,3 +76,4 @@ graph TD
     C0 --> G0
     D0 --> G1
     F1 --> G2
+'''
