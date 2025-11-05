@@ -3,7 +3,7 @@ import { Button, Card } from "@/components/ui";
 
 export default function AttractPage() {
   return (
-    <AppLayout
+    <Layout
       title="Attract demand"
       description="Design full-funnel programs that consistently engage the right prospects."
     >
