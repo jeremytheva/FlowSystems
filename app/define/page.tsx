@@ -46,6 +46,6 @@ export default function DefinePage() {
           </Button>
         </Card>
       </div>
-    </AppLayout>
+    </Layout>
   );
 }
