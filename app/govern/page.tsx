@@ -16,6 +16,6 @@ export default function GovernPage() {
           Configure rituals
         </Button>
       </Card>
-    </AppLayout>
+    </Layout>
   );
 }
