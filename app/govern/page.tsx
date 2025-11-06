@@ -3,7 +3,7 @@ import { Button, Card } from "@/components/ui";
 
 export default function GovernPage() {
   return (
-    <AppLayout
+    <Layout
       title="Govern operations"
       description="Ensure the right guardrails, rituals, and reporting are in place to scale responsibly."
     >
