@@ -14,6 +14,6 @@ export default function ServePage() {
         </p>
         <Button className="w-full">Create workflow</Button>
       </Card>
-    </AppLayout>
+    </Layout>
   );
 }
