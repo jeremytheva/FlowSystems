@@ -1,9 +1,9 @@
-import { AppLayout } from "@/components/Layout";
+import { Layout } from "@/components/Layout";
 import { Button, Card } from "@/components/ui";
 
 export default function ServePage() {
   return (
-    <AppLayout
+    <Layout
       title="Serve customers"
       description="Orchestrate onboarding, support, and expansion experiences that feel intentional."
     >
