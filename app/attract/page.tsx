@@ -16,6 +16,6 @@ export default function AttractPage() {
           Build campaign plan
         </Button>
       </Card>
-    </AppLayout>
+    </Layout>
   );
 }
