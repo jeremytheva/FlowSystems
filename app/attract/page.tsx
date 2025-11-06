@@ -1,4 +1,4 @@
-import { AppLayout } from "@/components/Layout";
+import { Layout } from "@/components/Layout";
 import { Button, Card } from "@/components/ui";
 
 export default function AttractPage() {
