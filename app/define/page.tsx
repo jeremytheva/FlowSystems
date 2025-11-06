@@ -1,9 +1,9 @@
-import { AppLayout } from "@/components/Layout";
+import { Layout } from "@/components/Layout";
 import { Button, Card, Input } from "@/components/ui";
 
 export default function DefinePage() {
   return (
-    <AppLayout
+    <Layout
       title="Define your Flow System"
       description="Clarify the foundations of your brand and customer promise before activating downstream motions."
     >
