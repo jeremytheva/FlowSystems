@@ -1,9 +1,9 @@
-import { AppLayout } from "@/components/Layout";
+import { Layout } from "@/components/Layout";
 import { Button, Card } from "@/components/ui";
 
 export default function EvolvePage() {
   return (
-    <AppLayout
+    <Layout
       title="Evolve the system"
       description="Prioritize improvements and experiments that keep your platform sharp."
     >
@@ -16,6 +16,6 @@ export default function EvolvePage() {
           Review priorities
         </Button>
       </Card>
-    </AppLayout>
+    </Layout>
   );
 }
