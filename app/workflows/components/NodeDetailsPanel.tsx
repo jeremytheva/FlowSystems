@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import {
-  EnergyLevel,
-  MasAgentType,
-  NodeMetadata,
-  WorkflowNode,
-} from "@/app/lib/workflows/types";
+import { EnergyLevel, MasAgentType, NodeMetadata, WorkflowNode } from "@/lib/workflows/types";
 
 interface Props {
   node?: WorkflowNode;

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { callLLM } from "@/app/lib/ai/workflow-ai";
-import { WorkflowWithStructure } from "@/app/lib/workflows/types";
+import { callLLM } from "@/lib/ai/workflow-ai";
+import { WorkflowWithStructure } from "@/lib/workflows/types";
 
 export async function POST(request: Request) {
   const body = await request.json();

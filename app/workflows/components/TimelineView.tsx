@@ -1,4 +1,4 @@
-import { WorkflowNode } from "@/app/lib/workflows/types";
+import { WorkflowNode } from "@/lib/workflows/types";
 
 interface Props {
   nodes: WorkflowNode[];

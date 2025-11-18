@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { EnergyLevel } from "@/app/lib/workflows/types";
+import { EnergyLevel } from "@/lib/workflows/types";
 
 export type EnergyFilter = "ALL" | EnergyLevel;
 

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { fetchWorkflow } from "@/app/lib/workflows/client";
+import { fetchWorkflow } from "@/lib/workflows/client";
 import { WorkflowBuilder } from "../components/WorkflowBuilder";
 
 interface Props {

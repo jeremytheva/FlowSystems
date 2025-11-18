@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { requestExpandNode, requestSummarizeWorkflow } from "@/app/lib/ai/workflow-ai";
-import { saveWorkflow } from "@/app/lib/workflows/client";
-import { WorkflowWithStructure } from "@/app/lib/workflows/types";
+import { requestExpandNode, requestSummarizeWorkflow } from "@/lib/ai/workflow-ai";
+import { saveWorkflow } from "@/lib/workflows/client";
+import { WorkflowWithStructure } from "@/lib/workflows/types";
 import { AiGenerateWorkflowModal } from "./AiGenerateWorkflowModal";
 import { EnergyFilter, EnergyFilterToggle } from "./EnergyFilterToggle";
 import { GovernancePanel } from "./GovernancePanel";

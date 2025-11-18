@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { MasAgentType } from "@/app/lib/workflows/types";
+import { MasAgentType } from "@/lib/workflows/types";
 
 export async function POST(request: Request) {
   const body = await request.json();

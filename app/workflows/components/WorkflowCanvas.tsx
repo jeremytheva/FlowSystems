@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { WorkflowEdge, WorkflowNode } from "@/app/lib/workflows/types";
+import { WorkflowEdge, WorkflowNode } from "@/lib/workflows/types";
 import { EnergyFilter } from "./EnergyFilterToggle";
 
 interface Props {

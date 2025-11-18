@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { listWorkflows } from "@/app/lib/workflows/client";
+import { listWorkflows } from "@/lib/workflows/client";
 
 export default async function WorkflowsPage() {
   const workflows = await listWorkflows();

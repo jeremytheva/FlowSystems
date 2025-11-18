@@ -1,5 +1,5 @@
-import { evaluateWorkflowHealth } from "@/app/lib/workflows/governance";
-import { WorkflowWithStructure } from "@/app/lib/workflows/types";
+import { evaluateWorkflowHealth } from "@/lib/workflows/governance";
+import { WorkflowWithStructure } from "@/lib/workflows/types";
 
 interface Props {
   workflow: WorkflowWithStructure;

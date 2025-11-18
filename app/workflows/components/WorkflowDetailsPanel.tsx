@@ -1,6 +1,6 @@
 "use client";
 
-import { WorkflowWithStructure, WorkflowPhase, WorkflowStatus } from "@/app/lib/workflows/types";
+import { WorkflowPhase, WorkflowStatus, WorkflowWithStructure } from "@/lib/workflows/types";
 
 interface Props {
   workflow: WorkflowWithStructure;

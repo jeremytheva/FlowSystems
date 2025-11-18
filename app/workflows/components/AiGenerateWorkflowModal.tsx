@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { requestGenerateWorkflow } from "@/app/lib/ai/workflow-ai";
-import { WorkflowWithStructure } from "@/app/lib/workflows/types";
+import { requestGenerateWorkflow } from "@/lib/ai/workflow-ai";
+import { WorkflowWithStructure } from "@/lib/workflows/types";
 
 interface Props {
   open: boolean;
