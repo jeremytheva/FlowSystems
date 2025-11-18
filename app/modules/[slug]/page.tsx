@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -38,6 +39,23 @@ export default function ModuleDetailPage({ params }: ModulePageProps) {
         <h1 className="text-3xl font-bold text-slate-900">{flowModule.name}</h1>
         <p className="max-w-3xl text-base text-slate-600">{flowModule.description}</p>
       </header>
+
+      {flowModule.slug === "workflowflow" && (
+        <div className="flex flex-col gap-2 rounded-2xl border border-indigo-100 bg-indigo-50 p-4 text-sm text-slate-700 shadow-sm md:flex-row md:items-center md:justify-between">
+          <div className="space-y-1">
+            <p className="font-semibold text-slate-900">Workflow Builder</p>
+            <p className="text-slate-600">
+              Jump into the visual builder to design, govern, and test compound workflows with FlowBot and MAS.
+            </p>
+          </div>
+          <Link
+            className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-700"
+            href="/workflows"
+          >
+            Open workflow builder
+          </Link>
+        </div>
+      )}
 
       <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="text-xl font-semibold text-slate-900">Planned Features</h2>
