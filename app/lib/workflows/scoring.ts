@@ -487,29 +487,6 @@ function evaluateBuiltinRule(
 /**
  * A very simple generic profile you can use until category-specific ones are added.
  */
-function getGenericCustomProfile(): ScoringProfile {
-  return {
-    id: "generic_custom_v1",
-    name: "Generic Workflow Quality Profile",
-    description:
-      "Basic structural checks for any workflow (trigger + end, etc.).",
-    category: "Custom",
-    criteria: [
-      {
-        id: "structure.has_trigger_and_end",
-        label: "Has TRIGGER and END nodes",
-        description:
-          "Ensures the workflow has a clear starting trigger and a defined end.",
-        dimension: "structure",
-        weight: 1,
-        mode: "builtin",
-        builtinRuleId: "structure.has_trigger_and_end",
-      },
-    ],
-  };
-}
-// scoring.ts (ensure this is exported)
-
 export function getGenericCustomProfile(): ScoringProfile {
   return {
     id: "generic_custom_v1",
