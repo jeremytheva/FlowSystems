@@ -208,12 +208,11 @@ function getDefaultProfileForWorkflow(
   workflow: WorkflowWithStructure,
   context?: ScoreWorkflowOptions["context"]
 ): ScoringProfile {
-  // TODO: implement real lookup
-  // Example strategy:
-  // - If workflow.metadata.category exists, match on that
-  // - Fallback to context.category
-  // - Fallback to a generic "Custom" profile
-  return getGenericCustomProfile();
+  return resolveDefaultProfileForWorkflow(workflow, {
+    category: context?.category,
+    phase: context?.phase,
+    industry: context?.industry,
+  });
 }
 
 /**
@@ -367,6 +366,8 @@ function buildRecommendations(criteria: CriterionResult[]): string[] {
  * - "client_onboarding.has_qualification_step"
  * - "service_delivery.has_feedback_step"
  */
+// scoring.ts (inside evaluateBuiltinRule)
+
 function evaluateBuiltinRule(
   builtinRuleId: string,
   workflow: WorkflowWithStructure
@@ -376,21 +377,102 @@ function evaluateBuiltinRule(
       const hasTrigger = workflow.nodes.some((n) => n.type === "TRIGGER");
       const hasEnd = workflow.nodes.some((n) => n.type === "END");
       const score = hasTrigger && hasEnd ? 1 : 0;
-      const message = !hasTrigger || !hasEnd
-        ? "Workflows should have at least one TRIGGER and one END node."
-        : "Workflow has both TRIGGER and END nodes.";
+      const message =
+        !hasTrigger || !hasEnd
+          ? "Workflows should have at least one TRIGGER and one END node."
+          : "Workflow has both TRIGGER and END nodes.";
       return { score, message };
     }
 
-    // Example stub; implement real logic:
     case "client_onboarding.has_qualification_step": {
-      const hasQualify = workflow.nodes.some((n) =>
-        n.label.toLowerCase().includes("qualif")
-      );
+      // Heuristic: look for nodes that hint at qualification or discovery.
+      const hasQualify = workflow.nodes.some((n) => {
+        const label = n.label.toLowerCase();
+        return (
+          label.includes("qualif") ||
+          label.includes("discovery") ||
+          label.includes("fit") ||
+          label.includes("screen") ||
+          label.includes("assess")
+        );
+      });
+
       const score = hasQualify ? 1 : 0;
       const message = hasQualify
-        ? "Qualification step detected."
-        : "Consider adding a qualification step to filter leads.";
+        ? "Qualification or discovery step detected."
+        : "Consider adding a qualification step to ensure clients are a good fit.";
+      return { score, message };
+    }
+
+    case "client_onboarding.has_expectations_step": {
+      // Look for a node where expectations, scope or boundaries are set.
+      const hasExpectations = workflow.nodes.some((n) => {
+        const label = n.label.toLowerCase();
+        const desc = (n.description || "").toLowerCase();
+        const text = `${label} ${desc}`;
+        return (
+          text.includes("expectation") ||
+          text.includes("scope") ||
+          text.includes("agreement") ||
+          text.includes("what's included") ||
+          text.includes("what is included") ||
+          text.includes("boundaries")
+        );
+      });
+
+      const score = hasExpectations ? 1 : 0;
+      const message = hasExpectations
+        ? "Expectation/scope-setting step detected."
+        : "Add a step to clearly set expectations and scope with the client.";
+      return { score, message };
+    }
+
+    case "client_onboarding.has_kickoff_step": {
+      // Look for a kickoff/launch/start-of-engagement step.
+      const hasKickoff = workflow.nodes.some((n) => {
+        const label = n.label.toLowerCase();
+        const desc = (n.description || "").toLowerCase();
+        const text = `${label} ${desc}`;
+        return (
+          text.includes("kickoff") ||
+          text.includes("kick-off") ||
+          text.includes("onboarding call") ||
+          text.includes("welcome call") ||
+          text.includes("first session") ||
+          text.includes("start project") ||
+          text.includes("project start")
+        );
+      });
+
+      const score = hasKickoff ? 1 : 0;
+      const message = hasKickoff
+        ? "Kickoff/start-of-engagement step detected."
+        : "Include a kickoff call or explicit start-of-engagement step.";
+      return { score, message };
+    }
+
+    case "client_onboarding.has_feedback_or_survey_step": {
+      // Look for feedback/survey/review at or near the end.
+      const hasFeedbackNode = workflow.nodes.some((n) => {
+        const label = n.label.toLowerCase();
+        const desc = (n.description || "").toLowerCase();
+        const text = `${label} ${desc}`;
+        return (
+          text.includes("survey") ||
+          text.includes("feedback") ||
+          text.includes("review") ||
+          text.includes("testimonials") ||
+          text.includes("nps") ||
+          text.includes("check-in") ||
+          text.includes("debrief")
+        );
+      });
+
+      const score = hasFeedbackNode ? 1 : 0;
+      const message = hasFeedbackNode
+        ? "Feedback/survey step detected at the end of onboarding."
+        : "Consider adding a feedback or survey step at the end of onboarding.";
+
       return { score, message };
     }
 
