@@ -1,7 +1,8 @@
 // scoring.ts
 
 import type { WorkflowWithStructure, WorkflowPhase } from "./types";
-
+import { resolveDefaultProfileForWorkflow } from "./profiles";
+// ./profiles because profiles/ sits beside scoring.ts
 /**
  * High-level categories for workflows.
  * Extend as needed – keep these business-facing.
