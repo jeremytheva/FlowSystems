@@ -1,0 +1,416 @@
+*** Begin Patch
+*** Update File: app/lib/workflows/types.ts
+@@ interface NodeMetadata {
+   success_metrics?: string;
++  /**
++   * Role responsible for this node, e.g. Marketing Manager.
++   */
++  role?: string;
++  /**
++   * Responsibility description for this node.
++   */
++   responsibility?: string;
+@@ interface WorkflowEdge {
+   label?: string;
+   metadata?: Record<string, unknown>;
++  /**
++   * Trigger event or condition that causes this transition to occur.
++   */
++  trigger?: string;
++  /**
++   * Action executed when transitioning along this edge.
++   */
++  action?: string;
+*** End Patch
+*** Update File: app/workflows/components/NodeDetailsPanel.tsx
+@@ function NodeDetailsPanel({ node, onChange, onExpand, mode }: Props) {
+@@
+         <label className="block text-sm">
+           <span className="text-gray-700">Description</span>
+           <textarea
+             value={node.description ?? ""}
+             onChange={(e) => onChange({ ...node, description: e.target.value })}
+             className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
+             rows={3}
+           />
+         </label>
++
++        {/* New fields: role and responsibility */}
++        <label className="block text-sm">
++          <span className="text-gray-700">Role</span>
++          <input
++            value={node.metadata.role ?? ""}
++            onChange={(e) => updateMetadata({ role: e.target.value })}
++            className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
++          />
++        </label>
++        <label className="block text-sm">
++          <span className="text-gray-700">Responsibility</span>
++          <textarea
++            value={node.metadata.responsibility ?? ""}
++            onChange={(e) => updateMetadata({ responsibility: e.target.value })}
++            className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
++            rows={2}
++          />
++        </label>
+*** End Patch
+*** Update File: app/workflows/components/WorkflowCanvas.tsx
+@@ function WorkflowCanvas({
+             <p className="text-xs uppercase text-gray-500">{node.type}</p>
+             <p className="font-semibold text-gray-900">{node.label}</p>
+             <p className="text-xs text-gray-600">{node.description}</p>
++            {node.metadata?.role && (
++              <p className="text-xs text-gray-500">
++                Role: {node.metadata.role}
++              </p>
++            )}
++            {node.metadata?.responsibility && (
++              <p className="text-xs italic text-gray-500">
++                {node.metadata.responsibility.length > 40
++                  ? node.metadata.responsibility.slice(0, 37) + "..."
++                  : node.metadata.responsibility}
++              </p>
++            )}
+*** End Patch
+*** Update File: app/workflows/components/WorkflowBuilder.tsx
+@@ function WorkflowBuilder({ initialWorkflow }: Props) {
+-  const [newConnection, setNewConnection] = useState({
+-    source: initialWorkflow.nodes[0]?.id ?? "",
+-    target: initialWorkflow.nodes[1]?.id ?? "",
+-    label: "",
+-  });
+-  const [forkConfig, setForkConfig] = useState({
+-    source: initialWorkflow.nodes[0]?.id ?? "",
+-    trueTarget: initialWorkflow.nodes[1]?.id ?? "",
+-    falseTarget: initialWorkflow.nodes[2]?.id ?? "",
+-    condition: "",
+-  });
++  const [newConnection, setNewConnection] = useState({
++    source: initialWorkflow.nodes[0]?.id ?? "",
++    target: initialWorkflow.nodes[1]?.id ?? "",
++    trigger: "",
++    action: "",
++  });
++  const [forkConfig, setForkConfig] = useState({
++    source: initialWorkflow.nodes[0]?.id ?? "",
++    trueTarget: initialWorkflow.nodes[1]?.id ?? "",
++    falseTarget: initialWorkflow.nodes[2]?.id ?? "",
++    condition: "",
++    trueAction: "",
++    falseAction: "",
++  });
+@@
+   const handleAddConnection = () => {
+     if (!newConnection.source || !newConnection.target) return;
+     const id = `edge-${Date.now()}`;
+     const edge = {
+       id,
+       workflow_id: workflow.id,
+       source_node_id: newConnection.source,
+       target_node_id: newConnection.target,
+-      label: newConnection.label || "Trigger",
++      label: newConnection.trigger || "Trigger",
++      trigger: newConnection.trigger || undefined,
++      action: newConnection.action || undefined,
+     } satisfies WorkflowWithStructure["edges"][number];
+     setWorkflow((current) => ({ ...current, edges: [...current.edges, edge] }));
+   };
+@@
+   const handleAddFork = () => {
+     if (!forkConfig.source || !forkConfig.trueTarget || !forkConfig.falseTarget) return;
+@@
+     const edgesToAdd: WorkflowWithStructure["edges"] = [
+       {
+         id: `edge-${forkNode.id}-in`,
+         workflow_id: workflow.id,
+         source_node_id: forkConfig.source,
+         target_node_id: forkNode.id,
+-        label: forkConfig.condition || "Condition",
++        label: forkConfig.condition || "Condition",
++        trigger: forkConfig.condition || undefined,
+       },
+       {
+         id: `edge-${forkNode.id}-true`,
+         workflow_id: workflow.id,
+         source_node_id: forkNode.id,
+         target_node_id: forkConfig.trueTarget,
+         label: "Yes / True",
++        action: forkConfig.trueAction || undefined,
+       },
+       {
+         id: `edge-${forkNode.id}-false`,
+         workflow_id: workflow.id,
+         source_node_id: forkNode.id,
+         target_node_id: forkConfig.falseTarget,
+         label: "No / Else",
++        action: forkConfig.falseAction || undefined,
+       },
+     ];
+*** End Patch
+*** Update File: app/workflows/components/WorkflowBuilder.tsx
+@@
+ import { AiGenerateWorkflowModal } from "./AiGenerateWorkflowModal";
++import { MermaidExportModal } from "./MermaidExportModal";
+@@
+   const [showGenerate, setShowGenerate] = useState(false);
++  const [showExport, setShowExport] = useState(false);
+   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+@@
+       <div className="flex flex-wrap items-center gap-3">
+@@
+           <button
+             onClick={handleSave}
+             className="rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow"
+           >
+             Save
+           </button>
++          <button
++            onClick={() => setShowExport(true)}
++            className="rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow"
++          >
++            Export
++          </button>
+           {statusMessage && <span className="text-xs text-gray-600">{statusMessage}</span>}
+         </div>
+*** End Patch
+*** Update File: app/workflows/components/WorkflowBuilder.tsx
+@@
+       <AiGenerateWorkflowModal
+         open={showGenerate}
+         onClose={() => setShowGenerate(false)}
+         onGenerated={(wf) => {
+           setWorkflow(wf);
+           setSelectedNodeId(wf.nodes[0]?.id);
+         }}
+       />
++      <MermaidExportModal
++        open={showExport}
++        onClose={() => setShowExport(false)}
++        workflow={workflow}
++      />
+*** End Patch
+*** Update File: app/workflows/components/WorkflowBuilder.tsx
+@@
+               <label className="block text-xs text-gray-600">
+-                  Trigger / condition
+-                  <input
+-                    value={newConnection.label}
+-                    onChange={(e) => setNewConnection((c) => ({ ...c, label: e.target.value }))}
+-                    className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
+-                    placeholder="e.g. form submitted"
+-                  />
+-                </label>
+-                <button
+-                  onClick={handleAddConnection}
+-                  className="w-full rounded-md bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow"
+-                >
+-                  Add connection
+-                </button>
++                  Trigger
++                  <input
++                    value={newConnection.trigger}
++                    onChange={(e) => setNewConnection((c) => ({ ...c, trigger: e.target.value }))}
++                    className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
++                    placeholder="e.g. form submitted"
++                  />
++                </label>
++                <label className="block text-xs text-gray-600">
++                  Action
++                  <input
++                    value={newConnection.action}
++                    onChange={(e) => setNewConnection((c) => ({ ...c, action: e.target.value }))}
++                    className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
++                    placeholder="e.g. assign to sales"
++                  />
++                </label>
++                <button
++                  onClick={handleAddConnection}
++                  className="w-full rounded-md bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow"
++                >
++                  Add connection
++                </button>
+*** End Patch
+*** Update File: app/workflows/components/WorkflowBuilder.tsx
+@@
+               <div className="space-y-2">
+                 <h4 className="text-sm font-semibold text-gray-800">Add fork</h4>
+@@
+-                 <div className="grid grid-cols-2 gap-2">
+-                   <label className="block text-xs text-gray-600">
+-                     True branch
+-                     <select
+-                       value={forkConfig.trueTarget}
+-                       onChange={(e) => setForkConfig((c) => ({ ...c, trueTarget: e.target.value }))}
+-                       className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
+-                     >
+-                       {workflow.nodes.map((node) => (
+-                         <option key={node.id} value={node.id}>
+-                           {node.label}
+-                         </option>
+-                       ))}
+-                     </select>
+-                   </label>
+-                   <label className="block text-xs text-gray-600">
+-                     False branch
+-                     <select
+-                       value={forkConfig.falseTarget}
+-                       onChange={(e) => setForkConfig((c) => ({ ...c, falseTarget: e.target.value }))}
+-                       className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
+-                     >
+-                       {workflow.nodes.map((node) => (
+-                         <option key={node.id} value={node.id}>
+-                           {node.label}
+-                         </option>
+-                       ))}
+-                     </select>
+-                   </label>
+-                 </div>
+-                 <button
+-                   onClick={handleAddFork}
+-                   className="w-full rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow"
+-                 >
+-                   Add fork with condition
+-                 </button>
++                 <div className="grid grid-cols-2 gap-2">
++                   <label className="block text-xs text-gray-600">
++                     True branch
++                     <select
++                       value={forkConfig.trueTarget}
++                       onChange={(e) => setForkConfig((c) => ({ ...c, trueTarget: e.target.value }))}
++                       className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
++                     >
++                       {workflow.nodes.map((node) => (
++                         <option key={node.id} value={node.id}>
++                           {node.label}
++                         </option>
++                       ))}
++                     </select>
++                     <input
++                       value={forkConfig.trueAction}
++                       onChange={(e) => setForkConfig((c) => ({ ...c, trueAction: e.target.value }))}
++                       className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
++                       placeholder="True branch action"
++                     />
++                   </label>
++                   <label className="block text-xs text-gray-600">
++                     False branch
++                     <select
++                       value={forkConfig.falseTarget}
++                       onChange={(e) => setForkConfig((c) => ({ ...c, falseTarget: e.target.value }))}
++                       className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
++                     >
++                       {workflow.nodes.map((node) => (
++                         <option key={node.id} value={node.id}>
++                           {node.label}
++                         </option>
++                       ))}
++                     </select>
++                     <input
++                       value={forkConfig.falseAction}
++                       onChange={(e) => setForkConfig((c) => ({ ...c, falseAction: e.target.value }))}
++                       className="mt-1 w-full rounded-md border px-2 py-1 text-sm"
++                       placeholder="False branch action"
++                     />
++                   </label>
++                 </div>
++                 <button
++                   onClick={handleAddFork}
++                   className="w-full rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow"
++                 >
++                   Add fork with condition
++                 </button>
+*** End Patch
+*** Add File: app/workflows/components/MermaidExportModal.tsx
++"use client";
++
++import { useEffect, useState } from "react";
++import type { WorkflowWithStructure } from "@/lib/workflows/types";
++
++interface Props {
++  open: boolean;
++  onClose: () => void;
++  workflow: WorkflowWithStructure;
++}
++
++function sanitizeId(id: string): string {
++  return id.replace(/[^a-zA-Z0-9]/g, "_");
++}
++
++function escapeLabel(s: string): string {
++  return s.replace(/"/g, '\\"').replace(/\n/g, '\\n');
++}
++
++function exportToMermaid(workflow: WorkflowWithStructure): string {
++  const lines: string[] = [];
++  lines.push("graph TD");
++  const roleGroups: Record<string, WorkflowWithStructure["nodes"]> = {};
++  workflow.nodes.forEach((node) => {
++    const role = node.metadata.role || "Unassigned";
++    if (!roleGroups[role]) roleGroups[role] = [];
++    roleGroups[role].push(node);
++  });
++  Object.keys(roleGroups).forEach((role) => {
++    const safeRole = sanitizeId(role);
++    lines.push(`  subgraph ${safeRole}`);
++    roleGroups[role].forEach((node) => {
++      const id = sanitizeId(node.id);
++      const label = escapeLabel(`${node.label}\\n${node.metadata.responsibility || ""}`);
++      lines.push(`    ${id}[\"${label}\"]`);
++    });
++    lines.push("  end");
++  });
++  workflow.edges.forEach((edge) => {
++    const from = sanitizeId(edge.source_node_id);
++    const to = sanitizeId(edge.target_node_id);
++    let label = "";
++    if (edge.trigger) label = edge.trigger;
++    if (edge.action) label = label ? `${label} / ${edge.action}` : edge.action;
++    else if (edge.label) label = edge.label || "";
++    if (label) {
++      lines.push(`  ${from} -->|${label}| ${to}`);
++    } else {
++      lines.push(`  ${from} --> ${to}`);
++    }
++  });
++  return lines.join("\n");
++}
++
++export function MermaidExportModal({ open, onClose, workflow }: Props) {
++  const [code, setCode] = useState("");
++  useEffect(() => {
++    if (open) {
++      setCode(exportToMermaid(workflow));
++    }
++  }, [open, workflow]);
++  if (!open) return null;
++  const handleCopy = async () => {
++    try {
++      await navigator.clipboard.writeText(code);
++    } catch (err) {
++      console.error(err);
++    }
++  };
++  return (
++    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
++      <div className="w-full max-w-xl rounded-lg bg-white p-6 shadow-xl space-y-4">
++        <div className="flex justify-between items-center">
++          <h3 className="text-lg font-semibold">Mermaid export</h3>
++          <button onClick={onClose} className="text-sm text-gray-500">Close</button>
++        </div>
++        <pre className="overflow-auto bg-gray-100 p-3 rounded-md text-xs" style={{ maxHeight: '400px' }}>
++{code}
++        </pre>
++        <div className="flex justify-end gap-3">
++          <button
++            onClick={handleCopy}
++            className="rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow"
++          >
++            Copy to clipboard
++          </button>
++        </div>
++      </div>
++    </div>
++  );
++}
+*** End Patch
+*** End Patch
