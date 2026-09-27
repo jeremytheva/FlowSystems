@@ -1,0 +1,10 @@
+schema_version: 1
+master_repository: jeremytheva/project-master
+master_standard_version: 1.0.0
+templates:
+  repository-governance: { version: 1.0.0, adoption: adapted }
+  provider-certification: { version: 1.0.0, adoption: reference }
+  migration-approval-package: { version: 1.0.0, adoption: reference }
+notes:
+  - "Existing FlowSystems architecture and roadmap remain authoritative."
+  - "No provider/database authority is inferred without project evidence."
